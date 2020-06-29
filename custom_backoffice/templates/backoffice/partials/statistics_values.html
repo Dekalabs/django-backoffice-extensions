@@ -1,0 +1,18 @@
+{% load backoffice %}
+<div class="columns is-multiline">
+{% for label, value in statistics.items %}
+  <div class="column is-one-quarter">
+    <div class="card has-text-centered">
+      <div class="card-content">
+        <p class="title">{{ value | statistics_value }}</p>
+        <p class="subtitle is-size-6 is-uppercase has-text-grey">{{ label }}</p>
+      </div>
+      {% if value.help_text %}
+      <footer class="card-footer">
+        <p class="card-footer-item is-size-7 has-text-grey-light">{{value.help_text  }}</p>
+      </footer>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div>

@@ -1,0 +1,20 @@
+{% load i18n %}
+<h3 class="subtitle">{% trans "Filters" %}</h3>
+<form method="get">
+  {% for field in filter.form %}
+    <div class="field">
+      <label class="label">{{ field.label }}</label>
+        <div class="control">
+          {{ field }}
+          {% if field.help_text %}
+            <p class="help">{{ field.help_text }}</p>
+          {% endif %}
+        </div>
+    </div>
+  {% endfor %}
+  <div class="field">
+    <div class="control">
+      <button class="button is-primary" type="submit">{% trans "Filter" %}</button>
+    </div>
+  </div>
+</form>

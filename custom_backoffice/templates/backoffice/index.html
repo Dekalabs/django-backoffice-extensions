@@ -1,0 +1,8 @@
+{% extends "backoffice/sidebar.html" %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content%}
+<h1 class="title">
+    {% blocktrans %}Welcome to {{ backoffice_tile }}'s backoffice panel{% endblocktrans %}</h1>
+{% endblock content %}

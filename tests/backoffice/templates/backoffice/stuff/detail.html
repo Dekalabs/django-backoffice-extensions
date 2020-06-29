@@ -1,0 +1,7 @@
+{% extends "backoffice/bases/detail.html" %}
+{% load i18n %}
+{% load backoffice %}
+
+{% block title%}
+<h1 class="title">{% trans "Data for stuff" %} {{ instance.get_full_name }}</h1>
+{% endblock title%}

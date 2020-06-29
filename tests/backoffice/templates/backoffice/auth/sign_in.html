@@ -1,0 +1,33 @@
+{% extends "backoffice/headers.html" %}
+{% load i18n %}
+
+{% block section %}
+<div class="column">
+    <h1 class="title is-1">{% trans "Sign In" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="notification is-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        <div class="field">
+            <label class="label">{{ form.username.label }}</label>
+            <p class="control">
+                {{ form.username }}
+            </p>
+            {{ form.username.errors }}
+        </div>
+        <div class="field">
+            <label class="label">{{ form.password.label }}</label>
+            <p class="control">
+                {{ form.password }}
+            </p>
+            {{ form.password.errors }}
+        </div>
+        <div class="field is-action">
+            <button class="button is-primary">{% trans "Sign in" %}</button>
+        </div>
+    </form>
+</div>
+{% endblock section %}

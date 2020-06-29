@@ -1,0 +1,21 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>{% block header_title %}{{ backoffice_tile }}{% endblock header_title %}</title>
+  {% block extra_header %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  {% endblock extra_header %}
+</head>
+
+<body>
+  {% block body %}{% endblock body %}
+</body>
+
+</html>

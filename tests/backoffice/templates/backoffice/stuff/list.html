@@ -1,0 +1,7 @@
+{% extends "backoffice/bases/list.html" %}
+{% load backoffice %}
+{% load humanize %}
+{% load i18n %}
+
+{% block title %}<h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }} {% trans "stuff" %}</h1>
+{% endblock %}

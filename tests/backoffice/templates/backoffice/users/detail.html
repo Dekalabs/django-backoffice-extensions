@@ -1,0 +1,18 @@
+{% extends "backoffice/bases/detail.html" %}
+{% load i18n %}
+{% load backoffice %}
+
+{% block title%}
+<h1 class="title">{% trans "Data for user" %} {{ instance.get_full_name }}</h1>
+{% endblock title%}
+{% block actions %}
+<div class="column is-3">
+  <div class="field is-grouped">
+    <p class="control">
+      <a class="button is-primary" href="{% url "backoffice:user-edit" pk=instance.pk %}">
+        {% trans "Edit" %}
+      </a>
+    </p>
+  </div>
+</div>
+{% endblock actions %}

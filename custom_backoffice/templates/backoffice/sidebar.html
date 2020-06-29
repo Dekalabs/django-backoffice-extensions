@@ -1,0 +1,25 @@
+{% extends "backoffice/headers.html" %}
+{% load i18n %}
+{% load backoffice %}
+
+{% block section %}
+<div class="column is-2">
+  {% block sidebar %}
+  <aside class="menu">
+    {% sidebar_menu %}
+  </aside>
+  {% endblock sidebar %}
+</div>
+<div class="column">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="notification{% if message.tags %} {{ message.tags }}{% endif %}">
+    <button class="delete"></button>
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% block content %}
+  {% endblock content %}
+</div>
+{% endblock section %}

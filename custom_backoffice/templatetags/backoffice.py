@@ -1,0 +1,133 @@
+from django import template
+from django.apps import apps
+from django.contrib.gis.geos import Point
+from django.contrib.humanize.templatetags.humanize import intcomma
+from django.db.models import FieldDoesNotExist, Manager, QuerySet
+from django.db.models.fields.files import ImageFieldFile
+from django.template import defaultfilters
+from django.urls import NoReverseMatch, reverse
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
+
+from custom_backoffice.helpers import StatisticsValue
+from custom_backoffice.settings import (
+    BOOLEAN_FALSE_ICON_CLASSES,
+    BOOLEAN_TRUE_ICON_CLASSES,
+    DETAILS_URLS,
+    STATUS_FIELDS,
+    STATUS_TAG_CLASSES,
+    URL_NAMESPACE,
+    SIDEBAR_CONFIG,
+)
+
+register = template.Library()
+
+
+@register.inclusion_tag("backoffice/partials/menu.html", takes_context=True)
+def sidebar_menu(context):
+    """Creates the sidebar data."""
+    sidebar = []
+    for section, entries in SIDEBAR_CONFIG.items():
+        entries_data = []
+        for entry, data in entries.items():
+            if data.get("permission") is None:
+                entries_data.append(
+                    (
+                        reverse(f"{URL_NAMESPACE}:{entry.lower()}-list"),
+                        data.get("label"),
+                    )
+                )
+        sidebar.append((section, entries_data))
+    return {"sidebar": sidebar}
+
+
+@register.filter
+def boolean_icon(value):
+    """Gets an icon for given boolean value."""
+    result = f'<i class="{BOOLEAN_FALSE_ICON_CLASSES}"></i>'
+    if value:
+        result = f'<i class="{BOOLEAN_TRUE_ICON_CLASSES}"></i>'
+    return mark_safe(result)
+
+
+@register.filter
+def status_tag(value):
+    """Gets an icon for given boolean value."""
+    result = (
+        f'<span class="tag {STATUS_TAG_CLASSES.get(value.status, "")}">'
+        f"{value.get_status_display()}</i>"
+    )
+    return mark_safe(result)
+
+
+@register.filter(name="getattr")
+def getattr_filter(obj, name):
+    """Calls to getattr over the given obj with the given name."""
+
+    def _parse_value(value):
+        """Parse the given value."""
+        if value is None:
+            value = "-"
+        if isinstance(value, bool):
+            return boolean_icon(value)
+        if isinstance(value, Point):
+            return f"{value.y},{value.x}"
+        if isinstance(value, ImageFieldFile):
+            if value:
+                return mark_safe(f'<img src="{value.url}" />')
+            return _("No picture")
+        if isinstance(value, Manager):
+            value = ", ".join([str(item) for item in value.all()]) or "-"
+        return value
+
+    if isinstance(name, tuple) and len(name) > 0:
+        name = name[0]
+    result = getattr(obj, name)
+    if result is None:
+        result = "-"
+    for detail_url_data in DETAILS_URLS:
+        names = detail_url_data.get("names", tuple())
+        lookup_field = detail_url_data.get("lookup_field") or "pk"
+        lookup_field_value = (
+            getattr(result, lookup_field) if hasattr(result, lookup_field) else result
+        )
+        if name in names:
+            try:
+                details_url = reverse(
+                    f"{URL_NAMESPACE}:{obj._meta.model_name}-detail",
+                    kwargs={lookup_field: lookup_field_value},
+                )
+                result = mark_safe(f'<a href="{details_url}">{str(result)}</a>')
+            except (NoReverseMatch, AttributeError):
+                result = result
+    if name in STATUS_FIELDS:
+        result = status_tag(obj)
+    if hasattr(result, "__call__") and not isinstance(result, Manager):
+        result = result()
+    return _parse_value(result)
+
+
+@register.filter
+def verbose_name(model_or_queryset, field):
+    """Gets the verbose name of the given model field."""
+    model = model_or_queryset
+    if isinstance(field, tuple) and len(field) > 1:
+        return field[1]
+    if isinstance(model_or_queryset, QuerySet):
+        model = model_or_queryset.model
+    try:
+        return model._meta.get_field(field).verbose_name
+    except FieldDoesNotExist:
+        if hasattr(model, field) and hasattr(getattr(model, field), "verbose_name"):
+            return getattr(getattr(model, field), "verbose_name")
+    return field
+
+
+@register.filter
+def statistics_value(value):
+    if not isinstance(value, StatisticsValue):
+        return intcomma(value)
+    result = f"{intcomma(value.value)}"
+    if value.percentage:
+        result = f"{defaultfilters.floatformat(value.value, 2)} %"
+    return result

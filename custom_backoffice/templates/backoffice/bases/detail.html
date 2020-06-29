@@ -1,0 +1,25 @@
+{% extends "backoffice/sidebar.html" %}
+{% load static %}
+{% load i18n %}
+
+{% load backoffice %}
+
+{% block content%}
+<div class="columns">
+  <div class="column">
+    {% block title %}{% endblock title %}
+  </div>
+  {% block actions %}
+  {% endblock actions %}
+</div>
+<table class="table is-fullwidth">
+  {% for field in fields %}
+  <tr>
+    <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
+    <td>{{ instance|getattr:field}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% block extra_content %}
+{% endblock extra_content %}
+{% endblock content%}

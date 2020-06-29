@@ -1,0 +1,8 @@
+{% for section, entries in sidebar %}
+<p class="menu-label">{{ section }}</p>
+<ul class="menu-list">
+    {% for url, label in entries %}
+    <li><a href="{{ url }}">{{ label }}</a></li>
+    {% endfor %}
+</ul>
+{% endfor %}
