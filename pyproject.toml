@@ -4,6 +4,15 @@ version = "1.0.0"
 description = "A set of views, tools and helpers to create a backoffice using Django."
 authors = ["Marcos Gabarda <marcos@dekalabs.com>"]
 license = "MIT"
+homepage = "https://github.com/Dekalabs/django-backoffice-extensions"
+packages = [
+    { include = "backoffice_extensions" },
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "License :: OSI Approved :: MIT License",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
