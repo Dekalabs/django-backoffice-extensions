@@ -1,5 +1,5 @@
-from custom_backoffice.mixins import ExportMixin, SearchListMixin
-from custom_backoffice.views import BackOfficeListView, BackOfficeDetailView
+from backoffice_extensions.mixins import ExportMixin, SearchListMixin
+from backoffice_extensions.views import BackOfficeListView, BackOfficeDetailView
 from tests.app.models import Stuff
 
 

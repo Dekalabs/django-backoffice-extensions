@@ -14,6 +14,6 @@ install:
   - poetry config virtualenvs.create false && poetry install -n --no-ansi
 script:
   - black --check .
-  - pytest --cov custom_backoffice
+  - pytest --cov backoffice_extensions
 after_success:
   - coveralls

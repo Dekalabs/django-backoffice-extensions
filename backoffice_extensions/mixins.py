@@ -7,8 +7,8 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.urls import NoReverseMatch, reverse
 
-from custom_backoffice.helpers import create_csv_from_data
-from custom_backoffice.settings import TITLE, URL_NAMESPACE
+from backoffice_extensions.helpers import create_csv_from_data
+from backoffice_extensions.settings import TITLE, URL_NAMESPACE
 
 
 class BackOfficeViewMixin:

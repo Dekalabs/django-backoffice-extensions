@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "django-backoffice"
+name = "django-backoffice-extensions"
 version = "1.0.0"
-description = "A set of views, tools and helpers to create a backoffice usingg Django."
-authors = ["Marcos Gabarda <hey@marcosgabarda.com>"]
+description = "A set of views, tools and helpers to create a backoffice using Django."
+authors = ["Marcos Gabarda <marcos@dekalabs.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]

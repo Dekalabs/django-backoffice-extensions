@@ -7,7 +7,7 @@ from tests.backoffice.auth.forms import SignInForm
 
 
 class SignInView(View):
-    """View to handle sing-in in the custom_backoffice."""
+    """View to handle sing-in in the backoffice_extensions."""
 
     template_name = "backoffice/auth/sign_in.html"
 

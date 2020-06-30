@@ -1,4 +1,4 @@
-from custom_backoffice.views import BackOfficeIndexView
+from backoffice_extensions.views import BackOfficeIndexView
 
 
 class IndexView(BackOfficeIndexView):

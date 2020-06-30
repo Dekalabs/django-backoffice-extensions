@@ -11,8 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import ListView
 
-from custom_backoffice.mixins import BackOfficeViewMixin
-from custom_backoffice.settings import URL_NAMESPACE
+from backoffice_extensions.mixins import BackOfficeViewMixin
+from backoffice_extensions.settings import URL_NAMESPACE
 
 User = get_user_model()
 
@@ -150,7 +150,7 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
 
 
 class BackOfficeIndexView(BackOfficeViewMixin, View):
-    """Home view of the custom_backoffice."""
+    """Home view of the backoffice_extensions."""
 
     template_name = "backoffice/index.html"
     sign_in_redirect: AnyStr = f"{URL_NAMESPACE}:sign-in"

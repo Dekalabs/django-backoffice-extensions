@@ -9,8 +9,8 @@ from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from custom_backoffice.helpers import StatisticsValue
-from custom_backoffice.settings import (
+from backoffice_extensions.helpers import StatisticsValue
+from backoffice_extensions.settings import (
     BOOLEAN_FALSE_ICON_CLASSES,
     BOOLEAN_TRUE_ICON_CLASSES,
     DETAILS_URLS,
@@ -26,11 +26,14 @@ register = template.Library()
 @register.inclusion_tag("backoffice/partials/menu.html", takes_context=True)
 def sidebar_menu(context):
     """Creates the sidebar data."""
+    user = context.get("user")
     sidebar = []
     for section, entries in SIDEBAR_CONFIG.items():
         entries_data = []
         for entry, data in entries.items():
-            if data.get("permission") is None:
+            if data.get("permission") is None or (
+                user and user.has_perm(data.get("permission"))
+            ):
                 entries_data.append(
                     (
                         reverse(f"{URL_NAMESPACE}:{entry.lower()}-list"),

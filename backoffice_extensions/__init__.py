@@ -6,4 +6,4 @@ from django.utils.module_loading import autodiscover_modules
 __version__ = "1.0.0"
 
 
-default_app_config = "custom_backoffice.apps.BackofficeAppConfig"
+default_app_config = "backoffice_extensions.apps.BackofficeAppConfig"

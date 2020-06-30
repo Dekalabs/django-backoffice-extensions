@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
-from custom_backoffice.mixins import ExportMixin, SearchListMixin
-from custom_backoffice.views import (
+from backoffice_extensions.mixins import ExportMixin, SearchListMixin
+from backoffice_extensions.views import (
     BackOfficeCreateView,
     BackOfficeDetailView,
     BackOfficeEditView,
