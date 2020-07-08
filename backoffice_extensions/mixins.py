@@ -36,7 +36,7 @@ class BackOfficeViewMixin:
         except NoReverseMatch:
             sign_in = ""
         return {
-            "backoffice_tile": TITLE,
+            "backoffice_title": TITLE,
             "index_url": index_url,
             "sign_out": sign_out,
             "sign_in": sign_in,

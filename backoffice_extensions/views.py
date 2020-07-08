@@ -168,4 +168,5 @@ class BackOfficeIndexView(BackOfficeViewMixin, View):
         if not request.user.is_authenticated:
             return redirect(self.sign_in_redirect)
         context = self.get_context_data()
+        context.update(self.get_extra_context())
         return render(request, self.template_name, context=context)
