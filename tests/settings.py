@@ -24,8 +24,11 @@ INSTALLED_APPS = [
 
 ROOT_URLCONF = "tests.urls"
 SITE_ID = 1
+USE_I18N = True
 LANGUAGE_CODE = "en"
 LANGUAGES = [("en", "English")]
+LOCALE_PATHS = ["./backoffice_extensions/locale/"]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
