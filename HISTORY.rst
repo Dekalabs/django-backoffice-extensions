@@ -7,6 +7,7 @@ History
 +++++++++++++++++
 
 * Changed sidebar config to support translations
+* Added translations
 
 1.0.1 (2020-7-8)
 +++++++++++++++++
