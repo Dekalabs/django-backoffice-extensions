@@ -1,4 +1,5 @@
 from tests.app.constants import ACTIVE, ERROR, IDLE
+from django.utils.translation import gettext_lazy as _
 
 DEBUG = True
 USE_TZ = True
@@ -67,9 +68,12 @@ BACKOFFICE_STATUS_TAG_CLASSES = {
     ACTIVE: "is-success",
     ERROR: "is-danger",
 }
-SIDEBAR_CONFIG = {
-    "Data": {
-        "user": {"label": "User", "permission": None,},
-        "stuff": {"label": "Stuff", "permission": None,},
+BACKOFFICE_SIDEBAR_CONFIG = [
+    {
+        "label": _("Data"),
+        "sections": {
+            "user": {"label": _("User"), "permission": None,},
+            "stuff": {"label": _("Stuff"), "permission": None,},
+        },
     }
-}
+]

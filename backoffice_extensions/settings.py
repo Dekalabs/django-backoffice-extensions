@@ -27,4 +27,4 @@ DETAILS_URLS = getattr(
     "BACKOFFICE_DETAILS_URLS",
     [{"names": ("pk", "id")}, {"names": ("user", "owner")},],
 )
-SIDEBAR_CONFIG = getattr(settings, "BACKOFFICE_SIDEBAR_CONFIG", {})
+SIDEBAR_CONFIG = getattr(settings, "BACKOFFICE_SIDEBAR_CONFIG", [])

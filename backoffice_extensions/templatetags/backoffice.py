@@ -28,19 +28,20 @@ def sidebar_menu(context):
     """Creates the sidebar data."""
     user = context.get("user")
     sidebar = []
-    for section, entries in SIDEBAR_CONFIG.items():
-        entries_data = []
-        for entry, data in entries.items():
+    for group in SIDEBAR_CONFIG:
+        group_label = group.get("label")
+        sections_data = []
+        for section, data in group.get("sections").items():
             if data.get("permission") is None or (
                 user and user.has_perm(data.get("permission"))
             ):
-                entries_data.append(
+                sections_data.append(
                     (
-                        reverse(f"{URL_NAMESPACE}:{entry.lower()}-list"),
+                        reverse(f"{URL_NAMESPACE}:{section.lower()}-list"),
                         data.get("label"),
                     )
                 )
-        sidebar.append((section, entries_data))
+        sidebar.append((group_label, sections_data))
     return {"sidebar": sidebar}
 
 
