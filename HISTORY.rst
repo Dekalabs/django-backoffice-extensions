@@ -3,6 +3,12 @@
 History
 -------
 
+1.0.3 (2020-7-15)
++++++++++++++++++
+
+* Added validation errors below fields in form template
+* Fixed problem with import Point
+
 1.0.2 (2020-7-8)
 +++++++++++++++++
 
