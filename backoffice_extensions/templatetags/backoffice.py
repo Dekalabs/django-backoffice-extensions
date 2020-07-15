@@ -1,6 +1,4 @@
 from django import template
-from django.apps import apps
-from django.contrib.gis.geos import Point
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db.models import FieldDoesNotExist, Manager, QuerySet
 from django.db.models.fields.files import ImageFieldFile
@@ -8,6 +6,7 @@ from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ImproperlyConfigured
 
 from backoffice_extensions.helpers import StatisticsValue
 from backoffice_extensions.settings import (
@@ -18,6 +17,8 @@ from backoffice_extensions.settings import (
     STATUS_TAG_CLASSES,
     URL_NAMESPACE,
     SIDEBAR_CONFIG,
+    NONE_VALUE,
+    NO_IMAGE_VALUE,
 )
 
 register = template.Library()
@@ -71,17 +72,24 @@ def getattr_filter(obj, name):
     def _parse_value(value):
         """Parse the given value."""
         if value is None:
-            value = "-"
+            value = NONE_VALUE
         if isinstance(value, bool):
-            return boolean_icon(value)
-        if isinstance(value, Point):
-            return f"{value.y},{value.x}"
+            value = boolean_icon(value)
         if isinstance(value, ImageFieldFile):
             if value:
-                return mark_safe(f'<img src="{value.url}" />')
-            return _("No picture")
+                value = mark_safe(f'<img src="{value.url}" />')
+            else:
+                value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
-            value = ", ".join([str(item) for item in value.all()]) or "-"
+            value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
+        # Check point only if we can import the Point class
+        try:
+            from django.contrib.gis.geos import Point
+
+            if isinstance(value, Point):
+                value = f"{value.y},{value.x}"
+        except (ImproperlyConfigured, KeyError):
+            pass
         return value
 
     if isinstance(name, tuple) and len(name) > 0:

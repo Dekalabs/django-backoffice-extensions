@@ -8,6 +8,8 @@ SECRET_KEY = "backoffice"
 # Specific project configuration
 # ------------------------------------------------------------------------------
 TITLE = getattr(settings, "BACKOFFICE_TITLE", "backoffice")
+NONE_VALUE = getattr(settings, "BACKOFFICE_NONE_VALUE", "-")
+NO_IMAGE_VALUE = getattr(settings, "BACKOFFICE_NONE_VALUE", NONE_VALUE)
 URL_NAMESPACE = getattr(settings, "BACKOFFICE_URL_NAMESPACE", "backoffice")
 BOOLEAN_TRUE_ICON_CLASSES = getattr(
     settings,
