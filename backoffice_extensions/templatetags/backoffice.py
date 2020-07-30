@@ -21,6 +21,12 @@ from backoffice_extensions.settings import (
     NO_IMAGE_VALUE,
 )
 
+try:
+    from django.contrib.gis.geos import Point
+except ImproperlyConfigured:
+    Point = None
+
+
 register = template.Library()
 
 
@@ -82,14 +88,8 @@ def getattr_filter(obj, name):
                 value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
             value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
-        # Check point only if we can import the Point class
-        try:
-            from django.contrib.gis.geos import Point
-
-            if isinstance(value, Point):
-                value = f"{value.y},{value.x}"
-        except (ImproperlyConfigured, KeyError):
-            pass
+        if Point and isinstance(value, Point):
+            value = f"{value.y},{value.x}"
         return value
 
     if isinstance(name, tuple) and len(name) > 0:
