@@ -12,7 +12,7 @@
   {% else  %}
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">{{ field.label }}</label>
+      <label class="label">{{ field.label }} {% if field.field.required %}*{% endif %}</label>
     </div>
     <div class="field-body">
       <div class="field">
