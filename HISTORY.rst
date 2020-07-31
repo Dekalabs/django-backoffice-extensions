@@ -3,6 +3,13 @@
 History
 -------
 
+1.0.4 (2020-7-31)
++++++++++++++++++
+
+* Import point form gis only one time
+* Mark required fields with a *
+* Table list set full width by default and hoverable effect
+
 1.0.3 (2020-7-15)
 +++++++++++++++++
 
