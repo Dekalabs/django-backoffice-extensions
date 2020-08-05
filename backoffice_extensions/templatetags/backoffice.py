@@ -1,12 +1,12 @@
 from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
-from django.db.models import FieldDoesNotExist, Manager, QuerySet
+from django.db.models import Manager, QuerySet
 from django.db.models.fields.files import ImageFieldFile
 from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, FieldDoesNotExist
 
 from backoffice_extensions.helpers import StatisticsValue
 from backoffice_extensions.settings import (
