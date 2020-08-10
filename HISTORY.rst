@@ -3,6 +3,11 @@
 History
 -------
 
+1.0.5 (2020-8-10)
++++++++++++++++++
+
+* Import FieldDoesNotExist from django.core.exceptions instead django.db.models
+
 1.0.4 (2020-7-31)
 +++++++++++++++++
 
