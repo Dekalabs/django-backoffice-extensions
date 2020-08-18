@@ -6,9 +6,11 @@ from tests.backoffice.users.views import (
     UserCreateView,
     UserEditView,
     ExportUsersView,
+    UserDeleteView,
 )
 
 urlpatterns = [
+    path("<int:pk>/delete/", UserDeleteView.as_view(), name="user-delete"),
     path("<int:pk>/edit/", UserEditView.as_view(), name="user-edit"),
     path("<int:pk>/", UserDetailView.as_view(), name="user-detail"),
     path("create/", UserCreateView.as_view(), name="user-create"),

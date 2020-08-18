@@ -70,6 +70,12 @@ class BackofficeTestCase(TestCase):
         user.refresh_from_db()
         self.assertEqual(data["username"], user.username)
 
+    def test_get_user_delete(self):
+        user = UserFactory()
+        with self.login(self.user):
+            self.get("backoffice:user-delete", pk=user.pk)
+        self.response_302()
+
     def test_get_export_users(self):
         UserFactory.create_batch(size=20)
         with self.login(self.user):
@@ -87,3 +93,9 @@ class BackofficeTestCase(TestCase):
         with self.login(self.user):
             self.get("backoffice:stuff-detail", pk=stuff.pk)
         self.response_200()
+
+    def test_get_stuffs_delete(self):
+        stuff = StuffFactory()
+        with self.login(self.user):
+            self.get("backoffice:stuff-delete", pk=stuff.pk)
+        self.response_302()
