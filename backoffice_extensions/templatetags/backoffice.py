@@ -26,7 +26,6 @@ try:
 except ImproperlyConfigured:
     Point = None
 
-
 register = template.Library()
 
 
@@ -34,18 +33,23 @@ register = template.Library()
 def sidebar_menu(context):
     """Creates the sidebar data."""
     user = context.get("user")
+    request = context.get("request")
+    active_path = request.get_full_path_info()
     sidebar = []
     for group in SIDEBAR_CONFIG:
         group_label = group.get("label")
         sections_data = []
         for section, data in group.get("sections").items():
             if data.get("permission") is None or (
-                user and user.has_perm(data.get("permission"))
+                    user and user.has_perm(data.get("permission"))
             ):
+                url = reverse(f"{URL_NAMESPACE}:{section.lower()}-list")
+                active = active_path.startswith(url)
                 sections_data.append(
                     (
-                        reverse(f"{URL_NAMESPACE}:{section.lower()}-list"),
+                        url,
                         data.get("label"),
+                        active,
                     )
                 )
         sidebar.append((group_label, sections_data))
