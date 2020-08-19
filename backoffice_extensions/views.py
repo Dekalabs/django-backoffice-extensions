@@ -149,6 +149,24 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
         return render(request, self.template_name, context=context)
 
 
+class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
+    """Base delete view."""
+
+    model_class: Type[models.Model] = models.Model
+    success_message = _("{instance} deleted")
+
+    def __init__(self, *args, **kwargs) -> None:
+        """Skip the restriction for templates."""
+        self.template_name = "delete"
+        super().__init__(*args, **kwargs)
+
+    def get(self, request, pk):
+        instance = get_object_or_404(self.model_class, pk=pk)
+        instance.delete()
+        messages.success(request, self.success_message.format(instance=str(instance)))
+        return redirect(f"{URL_NAMESPACE}:{self.model_class._meta.model_name}-list")
+
+
 class BackOfficeIndexView(BackOfficeViewMixin, View):
     """Home view of the backoffice_extensions."""
 

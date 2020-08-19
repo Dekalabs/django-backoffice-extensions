@@ -1,5 +1,8 @@
-from backoffice_extensions.mixins import ExportMixin, SearchListMixin
-from backoffice_extensions.views import BackOfficeListView, BackOfficeDetailView
+from backoffice_extensions.views import (
+    BackOfficeListView,
+    BackOfficeDetailView,
+    BackOfficeDeleteView,
+)
 from tests.app.models import Stuff
 
 
@@ -16,3 +19,7 @@ class StuffDetailView(BackOfficeDetailView):
     model_class = Stuff
     context_object_name = "stuff"
     fields = ["id", "status", "owner"]
+
+
+class StuffDeleteView(BackOfficeDeleteView):
+    model_class = Stuff

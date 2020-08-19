@@ -8,6 +8,7 @@ from backoffice_extensions.views import (
     BackOfficeDetailView,
     BackOfficeEditView,
     BackOfficeListView,
+    BackOfficeDeleteView,
 )
 from tests.backoffice.users.forms import CreationUserForm, UserForm
 
@@ -51,6 +52,10 @@ class UserDetailView(BackOfficeDetailView):
         "is_active",
         "date_joined",
     ]
+
+
+class UserDeleteView(BackOfficeDeleteView):
+    model_class = User
 
 
 class ExportUsersView(LoginRequiredMixin, ExportMixin, View):
