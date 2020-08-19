@@ -3,6 +3,14 @@
 History
 -------
 
+1.1.0 (2020-8-19)
++++++++++++++++++
+
+* Added delete view
+* Show link download for FieldFile
+* Footer always at the bottom of the page and menu always have a fixed width
+* Show active menu when url start with menu item url
+
 1.0.5 (2020-8-10)
 +++++++++++++++++
 
