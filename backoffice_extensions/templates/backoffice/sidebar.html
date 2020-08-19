@@ -3,9 +3,9 @@
 {% load backoffice %}
 
 {% block section %}
-<div class="column is-2">
+<div class="column is-narrow">
   {% block sidebar %}
-  <aside class="menu">
+  <aside class="menu" style="min-width: 12rem">
     {% sidebar_menu %}
   </aside>
   {% endblock sidebar %}
