@@ -1,12 +1,12 @@
 from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
-from django.db.models import Manager, QuerySet
-from django.db.models.fields.files import ImageFieldFile, FieldFile
+from django.db.models import FieldDoesNotExist, Manager, QuerySet
+from django.db.models.fields.files import ImageFieldFile
 from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ImproperlyConfigured, FieldDoesNotExist
+from django.core.exceptions import ImproperlyConfigured
 
 from backoffice_extensions.helpers import StatisticsValue
 from backoffice_extensions.settings import (
@@ -25,6 +25,7 @@ try:
     from django.contrib.gis.geos import Point
 except ImproperlyConfigured:
     Point = None
+
 
 register = template.Library()
 
@@ -90,13 +91,6 @@ def getattr_filter(obj, name):
                 value = mark_safe(f'<img src="{value.url}" />')
             else:
                 value = NO_IMAGE_VALUE
-        if isinstance(value, FieldFile):
-            if value:
-                link = f'<a href="{value.url}" download>{_("Download")}</a>'
-                file_name = f'<p class="help has-text-grey-light">{value.url}</p>'
-                value = mark_safe(f'{link}{file_name}')
-            else:
-                value = NONE_VALUE
         if isinstance(value, Manager):
             value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
         if Point and isinstance(value, Point):
