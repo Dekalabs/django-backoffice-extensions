@@ -12,11 +12,12 @@ from backoffice_extensions.settings import TITLE, URL_NAMESPACE
 
 
 class BackOfficeViewMixin:
+    uses_temaplate: bool = True
     template_name: AnyStr = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if not self.template_name:
+        if not self.template_name and self.uses_temaplate:
             raise NotImplementedError("You should specify the template_name attribute.")
 
     def get_extra_context(self) -> Dict:

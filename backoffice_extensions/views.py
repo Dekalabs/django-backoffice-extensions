@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
+from django.db.models import ProtectedError
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
@@ -67,6 +68,12 @@ class BackOfficeEditView(BackOfficeFormView):
 
     success_message = _("{instance} updated")
 
+    def get_redirect_response(self, instance):
+        model_class = self.get_model_class()
+        return redirect(
+            f"{URL_NAMESPACE}:{model_class._meta.model_name}-detail", pk=instance.pk
+        )
+
     def get(self, request, pk):
         model_class = self.get_model_class()
         instance = get_object_or_404(model_class, pk=pk)
@@ -86,9 +93,7 @@ class BackOfficeEditView(BackOfficeFormView):
             messages.success(
                 request, self.success_message.format(instance=str(instance))
             )
-            return redirect(
-                f"{URL_NAMESPACE}:{model_class._meta.model_name}-detail", pk=instance.pk
-            )
+            return self.get_redirect_response(instance=instance)
         return render(request, self.template_name, context=context)
 
 
@@ -152,19 +157,32 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
 class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
     """Base delete view."""
 
+    uses_temaplate = False
     model_class: Type[models.Model] = models.Model
     success_message = _("{instance} deleted")
+    protected_error_message = _("{instance} can't be deleted")
 
-    def __init__(self, *args, **kwargs) -> None:
-        """Skip the restriction for templates."""
-        self.template_name = "delete"
-        super().__init__(*args, **kwargs)
+    def get_redirect_response(self):
+        return redirect(f"{URL_NAMESPACE}:{self.model_class._meta.model_name}-list")
+
+    def perform_delete(self, instance):
+        """Overwrite to handle the deletion. By default, it uses model delete."""
+        instance.delete()
 
     def get(self, request, pk):
+        """Gets the instance and calls to perform delete."""
         instance = get_object_or_404(self.model_class, pk=pk)
-        instance.delete()
-        messages.success(request, self.success_message.format(instance=str(instance)))
-        return redirect(f"{URL_NAMESPACE}:{self.model_class._meta.model_name}-list")
+        instance_str = str(instance)
+        try:
+            self.perform_delete(instance=instance)
+            messages.success(
+                request, self.success_message.format(instance=instance_str)
+            )
+        except ProtectedError:
+            messages.error(
+                request, self.protected_error_message.format(instance=instance_str)
+            )
+        return self.get_redirect_response()
 
 
 class BackOfficeIndexView(BackOfficeViewMixin, View):
