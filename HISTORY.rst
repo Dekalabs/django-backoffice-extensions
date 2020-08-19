@@ -3,6 +3,12 @@
 History
 -------
 
+1.1.1 (2020-8-19)
++++++++++++++++++
+
+* Fix for loop for active menu
+* Delete view handles protection
+
 1.1.0 (2020-8-19)
 +++++++++++++++++
 
