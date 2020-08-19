@@ -1,7 +1,7 @@
 {% for section, entries in sidebar %}
     <p class="menu-label">{{ section }}</p>
     <ul class="menu-list">
-        {% for url, label in entries %}
+        {% for url, label, active in entries %}
             <li>
                 <a href="{{ url }}" class="{% if active %}is-active{% endif %}">
                     {{ label }}
