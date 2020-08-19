@@ -1,7 +1,7 @@
 from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db.models import Manager, QuerySet
-from django.db.models.fields.files import ImageFieldFile, FieldFile
+from django.db.models.fields.files import ImageFieldFile
 from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
@@ -34,18 +34,23 @@ register = template.Library()
 def sidebar_menu(context):
     """Creates the sidebar data."""
     user = context.get("user")
+    request = context.get("request")
+    active_path = request.get_full_path_info()
     sidebar = []
     for group in SIDEBAR_CONFIG:
         group_label = group.get("label")
         sections_data = []
         for section, data in group.get("sections").items():
             if data.get("permission") is None or (
-                user and user.has_perm(data.get("permission"))
+                    user and user.has_perm(data.get("permission"))
             ):
+                url = reverse(f"{URL_NAMESPACE}:{section.lower()}-list")
+                active = active_path.startswith(url)
                 sections_data.append(
                     (
-                        reverse(f"{URL_NAMESPACE}:{section.lower()}-list"),
+                        url,
                         data.get("label"),
+                        active,
                     )
                 )
         sidebar.append((group_label, sections_data))
@@ -86,13 +91,6 @@ def getattr_filter(obj, name):
                 value = mark_safe(f'<img src="{value.url}" />')
             else:
                 value = NO_IMAGE_VALUE
-        if isinstance(value, FieldFile):
-            if value:
-                link = f'<a href="{value.url}" download>{_("Download")}</a>'
-                file_name = f'<p class="help has-text-grey-light">{value.url}</p>'
-                value = mark_safe(f'{link}{file_name}')
-            else:
-                value = NONE_VALUE
         if isinstance(value, Manager):
             value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
         if Point and isinstance(value, Point):
