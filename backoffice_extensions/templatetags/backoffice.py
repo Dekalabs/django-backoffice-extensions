@@ -42,17 +42,11 @@ def sidebar_menu(context):
         sections_data = []
         for section, data in group.get("sections").items():
             if data.get("permission") is None or (
-                    user and user.has_perm(data.get("permission"))
+                user and user.has_perm(data.get("permission"))
             ):
                 url = reverse(f"{URL_NAMESPACE}:{section.lower()}-list")
                 active = active_path.startswith(url)
-                sections_data.append(
-                    (
-                        url,
-                        data.get("label"),
-                        active,
-                    )
-                )
+                sections_data.append((url, data.get("label"), active,))
         sidebar.append((group_label, sections_data))
     return {"sidebar": sidebar}
 
