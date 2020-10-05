@@ -9,13 +9,95 @@
     <meta charset="utf-8">
     <title>{% block header_title %}{{ backoffice_title }}{% endblock header_title %}</title>
     {% block extra_header %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <style>
             .layout {
                 min-height: calc(100vh - 168px); /*Footer height*/
+            }
+
+            body {
+                background-color: rgb(247, 247, 247);
+            }
+
+            .navbar {
+                background-color: #17191e;
+                box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px;
+                padding: 20px 45px;
+            }
+
+            .navbar * {
+                color: #fff;
+            }
+
+            .has-box {
+                box-shadow: rgba(0, 0, 0, 0.05) 0 0 5px;
+                background-color: rgb(255, 255, 255);
+                padding: 2em;
+            }
+
+            .input.search {
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+                background-color: rgb(238, 238, 238);
+            }
+
+            .display-grid {
+                display: grid !important;
+            }
+
+            .menu-label {
+                padding: 0 .75rem;
+                margin-top: .75rem;
+                margin-bottom: .75rem;
+            }
+
+            .menu-label {
+                color: #666f81;
+                font-size: .75em;
+                letter-spacing: .1em;
+                text-transform: uppercase;
+            }
+
+            .menu-list {
+                line-height: 1.25;
+            }
+
+            .menu-list a {
+                border-radius: 0;
+                display: block;
+                padding: .5rem 0;
+            }
+
+            .menu-list a.is-active {
+                background-color: rgba(38, 41, 48, 0.1);
+                color: #4a4a4a;
+            }
+
+            .menu-list li a {
+                padding-left: 2em;
+            }
+
+            .menu-list a:hover {
+                background-color: rgba(38, 41, 48, 0.15);
+            }
+
+            .navbar-link.is-active,
+            .navbar-link:hover,
+            a.navbar-item.is-active,
+            a.navbar-item:hover {
+                background-color: #e2e2e324;
+                color: #fff;
+            }
+
+            @media only screen and (max-width: 768px) {
+                .column.has-box {
+                    margin-right: 0 !important;
+                    margin-bottom: calc(1.5rem - .75rem);
+                }
             }
         </style>
     {% endblock extra_header %}

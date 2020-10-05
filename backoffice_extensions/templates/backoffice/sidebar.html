@@ -3,23 +3,23 @@
 {% load backoffice %}
 
 {% block section %}
-<div class="column is-narrow">
-  {% block sidebar %}
-  <aside class="menu" style="min-width: 12rem">
-    {% sidebar_menu %}
-  </aside>
-  {% endblock sidebar %}
-</div>
-<div class="column">
-  {% if messages %}
-  {% for message in messages %}
-  <div class="notification{% if message.tags %} {{ message.tags }}{% endif %}">
-    <button class="delete"></button>
-    {{ message }}
-  </div>
-  {% endfor %}
-  {% endif %}
-  {% block content %}
-  {% endblock content %}
-</div>
+    <div class="column is-narrow">
+        {% block sidebar %}
+            <aside class="menu" style="min-width: 14rem">
+                {% sidebar_menu %}
+            </aside>
+        {% endblock sidebar %}
+    </div>
+    <div class="column">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notification{% if message.tags %} {{ message.tags }}{% endif %}">
+                    <button class="delete"></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}
+        {% endblock content %}
+    </div>
 {% endblock section %}

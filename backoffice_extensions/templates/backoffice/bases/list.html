@@ -4,63 +4,68 @@
 {% load i18n %}
 {% load static %}
 
-{% block content%}
-  <div class="columns">
-    <div class="column">
-      {% block title %}<h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }}</h1>{% endblock %}
-    </div>
-    {%  block export %}
-    {%  endblock export %}
-  </div>
-  <div class="columns">
-    <div class="column">
-      {% include "backoffice/partials/search.html" %}
-    </div>
-  </div>
-  <hr />
-  <div class="columns">
-    <div class="column table-container">
-      <table class="table is-fullwidth is-hoverable">
-        <thead>
-          <tr>
-            {% for field in list_display %}
-              <th class="is-capitalized">{{ page_obj.object_list|verbose_name:field }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for obj in page_obj %}
-          <tr>
-            {% for field in list_display %}
-              {% if forloop.first %}
-                <th>
-                 {{ obj|getattr:field }}
-                </th>
-              {% else %}
-                <td>
-                {{ obj|getattr:field }}
-                </td>
-              {% endif %}
-            {% endfor %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% include "backoffice/partials/pagination.html" %}
-    </div>
-    {% if filter %}
-    <div class="column is-3">
-      {% include "backoffice/partials/filters.html" %}
-    </div>
-    {% endif %}
-  </div>
+{% block content %}
+    <section class="section">
+        <div class="columns has-box">
+            <div class="column">
+                {% block title %}
+                    <h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }}</h1>{% endblock %}
+            </div>
+            <div class="column">
+                {% include "backoffice/partials/search.html" %}
+            </div>
+            {% block export %}
+            {% endblock export %}
+        </div>
+        <div class="columns mt-2">
+            <div class="column has-box mr-3">
+                <div class="display-grid">
+                    <div class="table-container">
+                        <table class="table is-hoverable">
+                            <thead>
+                            <tr>
+                                {% for field in list_display %}
+                                    <th class="is-capitalized">{{ page_obj.object_list|verbose_name:field }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in page_obj %}
+                                <tr>
+                                    {% for field in list_display %}
+                                        {% if forloop.first %}
+                                            <th>
+                                                {{ obj|getattr:field }}
+                                            </th>
+                                        {% else %}
+                                            <td>
+                                                {{ obj|getattr:field }}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    {% include "backoffice/partials/pagination.html" %}
+                </div>
+            </div>
+            {% if filter %}
+                <div class="column is-3 has-box">
+                    {% include "backoffice/partials/filters.html" %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
 {% endblock content %}
 
-
 {% block footer %}
-  {{ block.super }}
-  {% if filter %}
-    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-    {{ filter.form.media }}
-  {% endif %}
+    {{ block.super }}
+    {% if filter %}
+        <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+        {{ filter.form.media }}
+    {% endif %}
 {% endblock %}
