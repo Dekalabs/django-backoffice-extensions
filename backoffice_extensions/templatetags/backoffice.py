@@ -5,7 +5,6 @@ from django.db.models.fields.files import ImageFieldFile
 from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured, FieldDoesNotExist
 
 from backoffice_extensions.helpers import StatisticsValue

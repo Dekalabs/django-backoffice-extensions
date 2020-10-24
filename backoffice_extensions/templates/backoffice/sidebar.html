@@ -12,12 +12,14 @@
     </div>
     <div class="column">
         {% if messages %}
-            {% for message in messages %}
-                <div class="notification{% if message.tags %} {{ message.tags }}{% endif %}">
-                    <button class="delete"></button>
-                    {{ message }}
-                </div>
-            {% endfor %}
+            <div class="px-3 pt-4">
+                {% for message in messages %}
+                    <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+                        <button class="delete"></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
         {% block content %}
         {% endblock content %}
