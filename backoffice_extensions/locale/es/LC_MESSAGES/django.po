@@ -83,3 +83,13 @@ msgstr "{instance} creada"
 #, python-brace-format
 msgid "{instance} updated"
 msgstr "{instance} actualizada"
+
+#: backoffice_extensions/views.py:162
+#, python-brace-format
+msgid "{instance} deleted"
+msgstr "{instance} eliminado"
+
+#: backoffice_extensions/views.py:163
+#, python-brace-format
+msgid "{instance} can't be deleted"
+msgstr "{instance} no se puede eliminar"
