@@ -87,7 +87,7 @@ msgstr "{instance} actualizada"
 #: backoffice_extensions/views.py:162
 #, python-brace-format
 msgid "{instance} deleted"
-msgstr "{instance} eliminado"
+msgstr "{instance} eliminada"
 
 #: backoffice_extensions/views.py:163
 #, python-brace-format
