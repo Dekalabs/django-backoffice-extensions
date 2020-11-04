@@ -111,6 +111,26 @@
                 height: 1px;
             }
 
+            .is-primary {
+                background-color: {{ backoffice_primary_bg_color }};
+                color: {{ backoffice_primary_color }};
+            }
+
+            .button.is-primary.is-hovered, .button.is-primary:hover {
+                background-color: {{ backoffice_primary_bg_color }};
+                color: {{ backoffice_primary_color }};
+            }
+
+            .button.is-primary.is-focused:not(:active),
+            .button.is-primary:focus:not(:active) {
+                box-shadow: none;
+            }
+
+            .button.is-primary.is-focused, .button.is-primary:focus {
+                border-color: transparent;
+                color: {{ backoffice_primary_color }};
+            }
+
             @media only screen and (max-width: 768px) {
                 .column.has-box {
                     margin-right: 0 !important;
