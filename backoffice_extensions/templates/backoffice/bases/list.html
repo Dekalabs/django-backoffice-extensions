@@ -5,61 +5,59 @@
 {% load static %}
 
 {% block content %}
-    <section class="section">
-        <div class="columns has-box">
-            <div class="column">
-                {% block title %}
-                    <h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }}</h1>{% endblock %}
-            </div>
-            <div class="column">
-                {% include "backoffice/partials/search.html" %}
-            </div>
-            {% block export %}
-            {% endblock export %}
+    <div class="columns has-box">
+        <div class="column">
+            {% block title %}
+                <h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }}</h1>{% endblock %}
         </div>
-        <div class="columns mt-2">
-            <div class="column has-box mr-3">
-                <div class="display-grid">
-                    <div class="table-container">
-                        <table class="table is-hoverable">
-                            <thead>
+        <div class="column">
+            {% include "backoffice/partials/search.html" %}
+        </div>
+        {% block export %}
+        {% endblock export %}
+    </div>
+    <div class="columns mt-2">
+        <div class="column has-box mr-3">
+            <div class="display-grid">
+                <div class="table-container">
+                    <table class="table is-hoverable">
+                        <thead>
+                        <tr>
+                            {% for field in list_display %}
+                                <th class="is-capitalized">{{ page_obj.object_list|verbose_name:field }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for obj in page_obj %}
                             <tr>
                                 {% for field in list_display %}
-                                    <th class="is-capitalized">{{ page_obj.object_list|verbose_name:field }}</th>
+                                    {% if forloop.first %}
+                                        <th>
+                                            {{ obj|getattr:field }}
+                                        </th>
+                                    {% else %}
+                                        <td>
+                                            {{ obj|getattr:field }}
+                                        </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
-                            </thead>
-                            <tbody>
-                            {% for obj in page_obj %}
-                                <tr>
-                                    {% for field in list_display %}
-                                        {% if forloop.first %}
-                                            <th>
-                                                {{ obj|getattr:field }}
-                                            </th>
-                                        {% else %}
-                                            <td>
-                                                {{ obj|getattr:field }}
-                                            </td>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    {% include "backoffice/partials/pagination.html" %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            {% if filter %}
-                <div class="column is-3 has-box">
-                    {% include "backoffice/partials/filters.html" %}
-                </div>
-            {% endif %}
+            <div class="mt-3">
+                {% include "backoffice/partials/pagination.html" %}
+            </div>
         </div>
-    </section>
+        {% if filter %}
+            <div class="column is-3 has-box">
+                {% include "backoffice/partials/filters.html" %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock content %}
 
 {% block footer %}
