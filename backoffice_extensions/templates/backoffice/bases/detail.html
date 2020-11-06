@@ -5,31 +5,29 @@
 {% load backoffice %}
 
 {% block content %}
-    <div class="columns has-box">
+    <div class="has-box mb-2">
+      <div class="columns">
         <div class="column">
-            {% block title %}{% endblock title %}
+          {% block title %}{% endblock title %}
         </div>
         {% block actions %}
         {% endblock actions %}
+      </div>
     </div>
-    <div class="columns has-box mt-1">
+    <div class="has-box mb-2">
+      <div class="columns">
         <div class="column">
-            <table class="table is-fullwidth">
-                {% for field in fields %}
-                    <tr>
-                        <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
-                        <td>{{ instance|getattr:field }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+          <table class="table is-fullwidth">
+            {% for field in fields %}
+              <tr>
+                <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
+                <td>{{ instance|getattr:field }}</td>
+              </tr>
+            {% endfor %}
+          </table>
         </div>
+      </div>
     </div>
-    {% if extra_content %}
-        <div class="columns has-box mt-1">
-            <div class="column">
-                {% block extra_content %}
-                {% endblock extra_content %}
-            </div>
-        </div>
-    {% endif %}
+    {% block extra_content %}
+    {% endblock extra_content %}
 {% endblock content %}
