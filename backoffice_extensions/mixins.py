@@ -8,8 +8,12 @@ from django.http import HttpResponse
 from django.urls import NoReverseMatch, reverse
 
 from backoffice_extensions.helpers import create_csv_from_data
-from backoffice_extensions.settings import (PRIMARY_BG_COLOR, PRIMARY_COLOR,
-                                            TITLE, URL_NAMESPACE)
+from backoffice_extensions.settings import (
+    PRIMARY_BG_COLOR,
+    PRIMARY_COLOR,
+    TITLE,
+    URL_NAMESPACE,
+)
 
 
 class BackOfficeViewMixin:

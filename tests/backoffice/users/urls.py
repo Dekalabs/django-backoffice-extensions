@@ -1,8 +1,13 @@
 from django.urls import path
 
-from tests.backoffice.users.views import (ExportUsersView, UserCreateView,
-                                          UserDeleteView, UserDetailView,
-                                          UserEditView, UserListView)
+from tests.backoffice.users.views import (
+    ExportUsersView,
+    UserCreateView,
+    UserDeleteView,
+    UserDetailView,
+    UserEditView,
+    UserListView,
+)
 
 urlpatterns = [
     path("<int:pk>/delete/", UserDeleteView.as_view(), name="user-delete"),

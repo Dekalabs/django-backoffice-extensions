@@ -1,7 +1,10 @@
 from django.urls import path
 
-from tests.backoffice.stuffs.views import (StuffDeleteView, StuffDetailView,
-                                           StuffListView)
+from tests.backoffice.stuffs.views import (
+    StuffDeleteView,
+    StuffDetailView,
+    StuffListView,
+)
 
 urlpatterns = [
     path("<int:pk>/delete/", StuffDeleteView.as_view(), name="stuff-delete"),

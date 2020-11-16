@@ -8,12 +8,17 @@ from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 
 from backoffice_extensions.helpers import StatisticsValue
-from backoffice_extensions.settings import (BOOLEAN_FALSE_ICON_CLASSES,
-                                            BOOLEAN_TRUE_ICON_CLASSES,
-                                            DETAILS_URLS, NO_IMAGE_VALUE,
-                                            NONE_VALUE, SIDEBAR_CONFIG,
-                                            STATUS_FIELDS, STATUS_TAG_CLASSES,
-                                            URL_NAMESPACE)
+from backoffice_extensions.settings import (
+    BOOLEAN_FALSE_ICON_CLASSES,
+    BOOLEAN_TRUE_ICON_CLASSES,
+    DETAILS_URLS,
+    NO_IMAGE_VALUE,
+    NONE_VALUE,
+    SIDEBAR_CONFIG,
+    STATUS_FIELDS,
+    STATUS_TAG_CLASSES,
+    URL_NAMESPACE,
+)
 
 try:
     from django.contrib.gis.geos import Point
