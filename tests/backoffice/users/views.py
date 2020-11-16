@@ -3,13 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
 from backoffice_extensions.mixins import ExportMixin, SearchListMixin
-from backoffice_extensions.views import (
-    BackOfficeCreateView,
-    BackOfficeDetailView,
-    BackOfficeEditView,
-    BackOfficeListView,
-    BackOfficeDeleteView,
-)
+from backoffice_extensions.views import (BackOfficeCreateView,
+                                         BackOfficeDeleteView,
+                                         BackOfficeDetailView,
+                                         BackOfficeEditView,
+                                         BackOfficeListView)
 from tests.backoffice.users.forms import CreationUserForm, UserForm
 
 User = get_user_model()

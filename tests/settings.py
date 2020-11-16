@@ -1,5 +1,6 @@
-from tests.app.constants import ACTIVE, ERROR, IDLE
 from django.utils.translation import gettext_lazy as _
+
+from tests.app.constants import ACTIVE, ERROR, IDLE
 
 DEBUG = True
 USE_TZ = True
@@ -75,8 +76,14 @@ BACKOFFICE_SIDEBAR_CONFIG = [
     {
         "label": _("Data"),
         "sections": {
-            "user": {"label": _("User"), "permission": None,},
-            "stuff": {"label": _("Stuff"), "permission": None,},
+            "user": {
+                "label": _("User"),
+                "permission": None,
+            },
+            "stuff": {
+                "label": _("Stuff"),
+                "permission": None,
+            },
         },
     }
 ]
