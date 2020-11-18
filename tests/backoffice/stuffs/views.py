@@ -1,7 +1,7 @@
 from backoffice_extensions.views import (
-    BackOfficeListView,
-    BackOfficeDetailView,
     BackOfficeDeleteView,
+    BackOfficeDetailView,
+    BackOfficeListView,
 )
 from tests.app.models import Stuff
 

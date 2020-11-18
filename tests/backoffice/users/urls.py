@@ -1,12 +1,12 @@
 from django.urls import path
 
 from tests.backoffice.users.views import (
-    UserListView,
-    UserDetailView,
-    UserCreateView,
-    UserEditView,
     ExportUsersView,
+    UserCreateView,
     UserDeleteView,
+    UserDetailView,
+    UserEditView,
+    UserListView,
 )
 
 urlpatterns = [

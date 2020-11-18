@@ -2,49 +2,56 @@
 {% load i18n %}
 {% load static %}
 
-{% block content%}
-{% block title %}{% endblock title %}
-<form method="post" {% block extra_form %}{% endblock extra_form %}>
-  {% csrf_token %}
-  {% for field in form %}
-  {% if field.is_hidden %}
-  {{ field }}
-  {% else  %}
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">{{ field.label }} {% if field.field.required %}*{% endif %}</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        {{ field }}
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text }}</p>
-        {% endif %}
-        {% for error in field.errors %}
-        <p class="help has-text-danger">{{ error }}</p>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
-  {% endfor %}
-  <div class="field is-horizontal">
-    <div class="field-label"></div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          {% block control %}
-          <button class="button is-primary" type="submit">{% trans "Save" %}</button>
-          {% endblock control %}
+{% block content %}
+    <div class="has-box">
+        <div class="columns">
+            <div class="column">
+                {% block title %}{% endblock title %}
+                <form method="post" {% block extra_form %}{% endblock extra_form %}>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.is_hidden %}
+                            {{ field }}
+                        {% else %}
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label">{{ field.label }} {% if field.field.required %}
+                                        *{% endif %}</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        {{ field }}
+                                        {% if field.help_text %}
+                                            <p class="help">{{ field.help_text }}</p>
+                                        {% endif %}
+                                        {% for error in field.errors %}
+                                            <p class="help has-text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="field is-horizontal">
+                        <div class="field-label"></div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    {% block control %}
+                                        <button class="button is-primary" type="submit">{% trans "Save" %}</button>
+                                    {% endblock control %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</form>
-{% endblock content%}
+{% endblock content %}
 
 {% block footer %}
-{{ block.super }}
-<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-{{ form.media }}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    {{ form.media }}
 {% endblock %}

@@ -2,7 +2,9 @@
 {% load humanize %}
 {% load i18n %}
 
-{% block content%}
-<h1 class="title">
-    {% blocktrans %}Welcome to {{ backoffice_title }}'s backoffice panel{% endblocktrans %}</h1>
+{% block content %}
+    <div class="has-box">
+        <h1 class="title">{% blocktrans %}Welcome to {{ backoffice_title }}'s backoffice
+            panel{% endblocktrans %}</h1>
+    </div>
 {% endblock content %}

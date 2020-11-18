@@ -1,6 +1,5 @@
 from django.conf import settings
 
-
 # Needed to build and publish
 # ------------------------------------------------------------------------------
 SECRET_KEY = "backoffice"
@@ -27,6 +26,12 @@ STATUS_TAG_CLASSES = getattr(settings, "BACKOFFICE_STATUS_TAG_CLASSES", {})
 DETAILS_URLS = getattr(
     settings,
     "BACKOFFICE_DETAILS_URLS",
-    [{"names": ("pk", "id")}, {"names": ("user", "owner")},],
+    [
+        {"names": ("pk", "id")},
+        {"names": ("user", "owner")},
+    ],
 )
 SIDEBAR_CONFIG = getattr(settings, "BACKOFFICE_SIDEBAR_CONFIG", [])
+
+PRIMARY_BG_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_BG_COLOR", "#00d1b2")
+PRIMARY_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_COLOR", "#ffffff")

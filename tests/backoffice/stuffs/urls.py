@@ -1,9 +1,9 @@
 from django.urls import path
 
 from tests.backoffice.stuffs.views import (
-    StuffListView,
-    StuffDetailView,
     StuffDeleteView,
+    StuffDetailView,
+    StuffListView,
 )
 
 urlpatterns = [

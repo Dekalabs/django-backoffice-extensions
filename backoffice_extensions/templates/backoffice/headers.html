@@ -4,10 +4,10 @@
 {% block body %}
     <div class="layout">
         {% block header %}
-            <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="{{ index_url }}">
-                        {{ backoffice_title }}
+                        <div class="title is-4">{{ backoffice_title }}</div>
                     </a>
                 </div>
                 <div class="navbar-end">
@@ -19,10 +19,10 @@
                 </div>
             </nav>
         {% endblock header %}
-        <section class="section columns">
+        <div class="columns">
             {% block section %}
             {% endblock section %}
-        </section>
+        </div>
     </div>
     {% block footer %}
         <footer class="footer">

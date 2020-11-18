@@ -5,10 +5,10 @@ from django.views import View
 from backoffice_extensions.mixins import ExportMixin, SearchListMixin
 from backoffice_extensions.views import (
     BackOfficeCreateView,
+    BackOfficeDeleteView,
     BackOfficeDetailView,
     BackOfficeEditView,
     BackOfficeListView,
-    BackOfficeDeleteView,
 )
 from tests.backoffice.users.forms import CreationUserForm, UserForm
 
