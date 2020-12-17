@@ -1,4 +1,4 @@
-from typing import AnyStr, Dict, List, Optional, Type
+from typing import Dict, List, Optional, Type
 
 from django import forms
 from django.contrib import messages
@@ -39,7 +39,7 @@ class BackOfficeFormView(LoginRequiredMixin, BackOfficeViewMixin, View):
 class BackOfficeCreateView(BackOfficeFormView):
     """Base view for creations."""
 
-    success_message: AnyStr = _("{instance} created")
+    success_message: str = _("{instance} created")
 
     def get(self, request):
         form = self.form_class()
@@ -189,7 +189,7 @@ class BackOfficeIndexView(BackOfficeViewMixin, View):
     """Home view of the backoffice_extensions."""
 
     template_name = "backoffice/index.html"
-    sign_in_redirect: AnyStr = f"{URL_NAMESPACE}:sign-in"
+    sign_in_redirect: str = f"{URL_NAMESPACE}:sign-in"
 
     @staticmethod
     def default_queryset() -> Dict:

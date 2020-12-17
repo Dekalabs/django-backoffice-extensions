@@ -3,6 +3,12 @@
 History
 -------
 
+1.2.1 (2020-12-14)
++++++++++++++++++
+
+Fix: pagination previous page url
+Fix: empty queryset in exports
+
 1.2.0 (2020-11-18)
 +++++++++++++++++
 

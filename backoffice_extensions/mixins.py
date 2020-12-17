@@ -1,8 +1,7 @@
 import collections
 from functools import reduce
-from typing import AnyStr, Dict, List, Optional, Type
+from typing import TYPE_CHECKING, AnyStr, Dict, List, Optional
 
-from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse
 from django.urls import NoReverseMatch, reverse
@@ -15,10 +14,13 @@ from backoffice_extensions.settings import (
     URL_NAMESPACE,
 )
 
+if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
 
 class BackOfficeViewMixin:
-    uses_temaplate: bool = True
-    template_name: AnyStr = None
+    uses_template: bool = True
+    template_name: Optional[str] = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -55,12 +57,12 @@ class SearchListMixin:
     """Mixin to add search functionality to default ListView
     Django view."""
 
-    search_param: AnyStr = "search"
+    search_param: str = "search"
     search_fields: List = []
 
-    def _search_filter(self, queryset) -> models.QuerySet:
+    def _search_filter(self, queryset) -> "QuerySet":
         """Applies search filtering to queryset."""
-        search_query = self.request.GET.get(self.search_param)
+        search_query = self.request.GET.get(self.search_param)  # type: ignore
         if search_query:
             queryset_filter = [
                 Q(**{f"{search_field}__icontains": search_query})
@@ -70,18 +72,18 @@ class SearchListMixin:
                 queryset = queryset.filter(reduce(lambda x, y: x | y, queryset_filter))
         return queryset
 
-    def get_queryset(self) -> models.QuerySet:
+    def get_queryset(self) -> "QuerySet":
         """Checks the 'search' variable to allow generic search."""
-        queryset = super().get_queryset()
+        queryset = super().get_queryset()  # type: ignore
         queryset = self._search_filter(queryset)
         return queryset
 
     def get_extra_context(self) -> Dict:
         """Adds search data."""
-        context: Dict = super().get_extra_context()
-        context[self.search_param] = self.request.GET.get(self.search_param, "")
-        parameters = self.request.GET.copy()
-        parameters = parameters.pop(self.page_kwarg, True) and parameters.urlencode()
+        context: Dict = super().get_extra_context()  # type: ignore
+        context[self.search_param] = self.request.GET.get(self.search_param, "")  # type: ignore
+        parameters = self.request.GET.copy()  # type: ignore
+        parameters = parameters.pop(self.page_kwarg, True) and parameters.urlencode()  # type: ignore
         context["parameters"] = parameters
         return context
 
@@ -89,14 +91,14 @@ class SearchListMixin:
 class ExportMixin:
     """Mixin to allow export CSV data."""
 
-    filename: AnyStr = "data.csv"
-    queryset: models.QuerySet = None
+    filename: str = "data.csv"
+    queryset: "QuerySet" = None
     filterset_class = None
     fields: List = []
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if not self.queryset:
+        if self.queryset is None:
             raise NotImplementedError("You should specify the queryset attribute.")
 
     def get_csv_response(self, data):
@@ -107,14 +109,14 @@ class ExportMixin:
         create_csv_from_data(data, stream=response)
         return response
 
-    def get_filename(self) -> AnyStr:
+    def get_filename(self) -> str:
         return self.filename
 
-    def get_queryset(self) -> models.QuerySet:
+    def get_queryset(self) -> "QuerySet":
         return self.queryset
 
     def get(self, request, *args, **kwargs):
-        items: models.QuerySet = self.get_queryset()
+        items: "QuerySet" = self.get_queryset()
         if self.filterset_class:
             _filter = self.filterset_class(request.GET, queryset=items)
             items = _filter.qs

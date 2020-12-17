@@ -38,4 +38,4 @@ def age_range_filter(field, min_age=None, max_age=None):
 StatisticsValue = collections.namedtuple(
     "StatisticsValue", ["value", "percentage", "help_text"]
 )
-StatisticsValue.__new__.__defaults__ = (False, None)
+StatisticsValue.__new__.__defaults__ = (False, None)  # type: ignore
