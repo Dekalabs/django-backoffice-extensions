@@ -103,14 +103,16 @@ def getattr_filter(obj, name):
         result = "-"
     for detail_url_data in DETAILS_URLS:
         names = detail_url_data.get("names", tuple())
+        follow = detail_url_data.get("follow", True)
         lookup_field = detail_url_data.get("lookup_field") or "pk"
         lookup_field_value = (
             getattr(result, lookup_field) if hasattr(result, lookup_field) else result
         )
+        target_model = result if follow else obj
         if name in names:
             try:
                 details_url = reverse(
-                    f"{URL_NAMESPACE}:{obj._meta.model_name}-detail",
+                    f"{URL_NAMESPACE}:{target_model._meta.model_name}-detail",
                     kwargs={lookup_field: lookup_field_value},
                 )
                 result = mark_safe(f'<a href="{details_url}">{str(result)}</a>')

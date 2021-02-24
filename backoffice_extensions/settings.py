@@ -27,7 +27,7 @@ DETAILS_URLS = getattr(
     settings,
     "BACKOFFICE_DETAILS_URLS",
     [
-        {"names": ("pk", "id")},
+        {"names": ("pk", "id"), "follow": False},
         {"names": ("user", "owner")},
     ],
 )
