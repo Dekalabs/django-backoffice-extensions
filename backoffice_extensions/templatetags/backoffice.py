@@ -2,7 +2,7 @@ from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from django.db.models import Manager, QuerySet
-from django.db.models.fields.files import ImageFieldFile
+from django.db.models.fields.files import FieldFile, ImageFieldFile
 from django.template import defaultfilters
 from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
@@ -94,6 +94,10 @@ def getattr_filter(obj, name):
             value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
         if Point and isinstance(value, Point):
             value = f"{value.y},{value.x}"
+        if isinstance(value, FieldFile) and "csv" in value.name:
+            value = mark_safe(
+            f'<a href="{result.url}" type="text/csv" download>{result.name}</a>'
+        )
         return value
 
     if isinstance(name, tuple) and len(name) > 0:
