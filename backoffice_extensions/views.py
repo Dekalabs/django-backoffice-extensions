@@ -157,7 +157,7 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
 class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
     """Base delete view."""
 
-    uses_temaplate = False
+    uses_template = False
     model_class: Type[models.Model] = models.Model
     success_message = _("{instance} deleted")
     protected_error_message = _("{instance} can't be deleted")

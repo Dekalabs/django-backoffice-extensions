@@ -24,7 +24,7 @@ class BackOfficeViewMixin:
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if not self.template_name and self.uses_temaplate:
+        if not self.template_name and self.uses_template:
             raise NotImplementedError("You should specify the template_name attribute.")
 
     def get_extra_context(self) -> Dict:
