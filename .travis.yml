@@ -13,7 +13,9 @@ install:
   - pip install poetry
   - poetry config virtualenvs.create false && poetry install -n --no-ansi
 script:
-  - black --check .
+  - black --check backoffice_extensions
+  - isort backoffice_extensions --profile black --check
+  - mypy --ignore-missing-imports backoffice_extensions
   - pytest --cov backoffice_extensions
 after_success:
   - coveralls

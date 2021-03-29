@@ -1,6 +1,6 @@
-# Common commands to habdle the project.
+# Common commands to handle the project.
 # ------------------------------------------------------------------------------
 check:
-	poetry run isort . --profile black
-	poetry run black .
-	poetry run mypy .
+	poetry run isort backoffice_extensions --profile black
+	poetry run black backoffice_extensions
+	poetry run mypy backoffice_extensions
