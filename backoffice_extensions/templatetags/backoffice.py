@@ -96,7 +96,7 @@ def getattr_filter(obj, name):
             value = f"{value.y},{value.x}"
         if isinstance(value, FieldFile) and "csv" in value.name:
             value = mark_safe(
-                f'<a href="{result.url}" type="text/csv" download>{result.name}</a>'
+                f'<a href="{value.url}" type="text/csv" download>{value.name}</a>'
             )
         return value
 
