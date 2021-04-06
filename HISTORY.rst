@@ -3,6 +3,13 @@
 History
 -------
 
+1.2.3 (2021-4-06)
++++++++++++++++++
+
+* feat: make csv file fields downloadeable
+* fix: repeated results in SearchListMixin
+* fix: typo "uses_template"
+
 1.2.2 (2021-2-24)
 +++++++++++++++++
 
