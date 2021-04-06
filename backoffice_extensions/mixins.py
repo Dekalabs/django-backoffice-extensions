@@ -69,7 +69,9 @@ class SearchListMixin:
                 for search_field in self.search_fields
             ]
             if queryset_filter:
-                queryset = queryset.filter(reduce(lambda x, y: x | y, queryset_filter))
+                queryset = queryset.filter(
+                    reduce(lambda x, y: x | y, queryset_filter)
+                ).distinct()
         return queryset
 
     def get_queryset(self) -> "QuerySet":
