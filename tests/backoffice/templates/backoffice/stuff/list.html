@@ -3,5 +3,7 @@
 {% load humanize %}
 {% load i18n %}
 
-{% block title %}<h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }} {% trans "stuff" %}</h1>
+{% block title %}
+    <div class="title is-4">{% trans "Stuff" %}</div>
+    <div class="subtitle is-6">{% trans "Total" %}: {{ paginator.count|intcomma }}</div>
 {% endblock %}
