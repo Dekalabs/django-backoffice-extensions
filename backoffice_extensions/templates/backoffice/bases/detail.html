@@ -6,27 +6,28 @@
 
 {% block content %}
     <div class="has-box mb-4">
-      <div class="columns">
-        <div class="column">
-          {% block title %}{% endblock title %}
+        <div class="mb-2 is-flex is-align-items-center has-flex-items">
+            <div class="is-block">
+                {% block title %}{% endblock %}
+            </div>
+            <div style="margin-left: auto">
+                {% block actions %}
+                {% endblock actions %}
+            </div>
         </div>
-        {% block actions %}
-        {% endblock actions %}
-      </div>
-    </div>
-    <div class="has-box mb-4">
-      <div class="columns">
-        <div class="column">
-          <table class="table is-fullwidth">
-            {% for field in fields %}
-              <tr>
-                <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
-                <td>{{ instance|getattr:field }}</td>
-              </tr>
-            {% endfor %}
-          </table>
+        <hr>
+        <div class="columns">
+            <div class="column">
+                <table class="table is-fullwidth">
+                    {% for field in fields %}
+                        <tr>
+                            <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
+                            <td>{{ instance|getattr:field }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-      </div>
     </div>
     {% block extra_content %}
     {% endblock extra_content %}

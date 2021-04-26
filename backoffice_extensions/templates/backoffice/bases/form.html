@@ -4,9 +4,10 @@
 
 {% block content %}
     <div class="has-box">
+        {% block title %}{% endblock title %}
+        <hr>
         <div class="columns">
             <div class="column">
-                {% block title %}{% endblock title %}
                 <form method="post" {% block extra_form %}{% endblock extra_form %}>
                     {% csrf_token %}
                     {% for field in form %}
@@ -32,7 +33,7 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                    <div class="field is-horizontal">
+                    <div class="field is-horizontal py-4">
                         <div class="field-label"></div>
                         <div class="field-body">
                             <div class="field">
