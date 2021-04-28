@@ -3,12 +3,25 @@
 History
 -------
 
+
+2.0.0 (2021-4-28)
++++++++++++++++++
+
+* Feat: the navbar has been removed and its content has been added in the sidebar that is fixed to the window.
+* Feat: modal has been added to confirm the deletion of an object.
+* Feat: templates and style have been changed.
+* Feat: selection widgets have been incorporated.
+* Feat: bulma's tags are used to display a field of multiple objects.
+* Feat: the templates used in the tests have been updated.
+* Feat: filters stick to the screen (if problems arise it could be removed).
+* Feat: notifications can be removed.
+
 1.2.3 (2021-4-06)
 +++++++++++++++++
 
-* feat: make csv file fields downloadeable
-* fix: repeated results in SearchListMixin
-* fix: typo "uses_template"
+* Feat: make csv file fields downloadeable
+* Fix: repeated results in SearchListMixin
+* Fix: typo "uses_template"
 
 1.2.2 (2021-2-24)
 +++++++++++++++++

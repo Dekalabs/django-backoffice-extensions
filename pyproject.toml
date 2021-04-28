@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-backoffice-extensions"
-version = "1.2.3"
+version = "2.0.0"
 description = "A set of views, tools and helpers to create a backoffice using Django."
 readme = "README.rst"
 authors = ["Marcos Gabarda <marcos@dekalabs.com>"]
@@ -31,7 +31,6 @@ pytest-django = "^3.9.0"
 pytest-cov = "^2.10.0"
 isort = "^5.8.0"
 mypy = "^0.812"
-
 
 [tool.isort]
 multi_line_output = 3
