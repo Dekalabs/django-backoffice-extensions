@@ -3,20 +3,20 @@
 {% load humanize %}
 {% load i18n %}
 
-{% block title %}<h1 class="title">{% trans "Total" %}: {{ paginator.count|intcomma }} {% trans "users" %}</h1>
+{% block title %}
+    <div class="title is-4">{% trans "Users" %}</div>
+    <div class="subtitle is-6">{% trans "Total" %}: {{ paginator.count|intcomma }}</div>
 {% endblock %}
 
 {% block export %}
-<div class="column is-4">
-  <div class="field is-grouped">
-    <p class="control">
-      <a class="button is-primary" href="{% url "backoffice:user-create" %}">{% trans "Create user" %}</a>
-    </p>
-    <p class="control">
-      <a class="button is-success" href="{% url "backoffice:user-export"%}?{{ request.GET.urlencode }}">
-        {% trans "Export to CSV" %}
-      </a>
-    </p>
-  </div>
-</div>
+    <div class="field is-grouped">
+        <p class="control">
+            <a class="button is-primary" href="{% url "backoffice:user-create" %}">{% trans "Create user" %}</a>
+        </p>
+        <p class="control">
+            <a class="button is-success" href="{% url "backoffice:user-export" %}?{{ request.GET.urlencode }}">
+                {% trans "Export to CSV" %}
+            </a>
+        </p>
+    </div>
 {% endblock export %}

@@ -91,7 +91,13 @@ def getattr_filter(obj, name):
             else:
                 value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
-            value = ", ".join([str(item) for item in value.all()]) or NONE_VALUE
+            if value.exists():
+                tags = '<div class="tags">'
+                for item in value.all():
+                    tags += f'<span class="tag">{str(item)}</span>'
+                value = mark_safe(tags + "</div>")
+            else:
+                value = NONE_VALUE
         if Point and isinstance(value, Point):
             value = f"{value.y},{value.x}"
         if isinstance(value, FieldFile) and "csv" in value.name:

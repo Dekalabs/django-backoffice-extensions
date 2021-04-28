@@ -33,5 +33,5 @@ DETAILS_URLS = getattr(
 )
 SIDEBAR_CONFIG = getattr(settings, "BACKOFFICE_SIDEBAR_CONFIG", [])
 
-PRIMARY_BG_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_BG_COLOR", "#00d1b2")
-PRIMARY_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_COLOR", "#ffffff")
+PRIMARY_BG_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_BG_COLOR", "#191988")
+PRIMARY_COLOR = getattr(settings, "BACKOFFICE_PRIMARY_COLOR", "#fff")

@@ -1,15 +1,14 @@
 {% load i18n %}
-<h3 class="subtitle">{% trans "Filters" %}</h3>
-<form method="get">
+<form method="get" class="filters">
   {% for field in filter.form %}
     <div class="field pb-2">
       <label class="label">{{ field.label }}</label>
-        <div class="control">
-          {{ field }}
-          {% if field.help_text %}
-            <p class="help">{{ field.help_text }}</p>
-          {% endif %}
-        </div>
+      <div class="control">
+        {{ field }}
+        {% if field.help_text %}
+          <p class="help">{{ field.help_text }}</p>
+        {% endif %}
+      </div>
     </div>
   {% endfor %}
   <div class="field">
@@ -18,3 +17,4 @@
     </div>
   </div>
 </form>
+

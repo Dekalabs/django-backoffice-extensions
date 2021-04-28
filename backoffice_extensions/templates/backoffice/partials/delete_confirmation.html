@@ -1,0 +1,45 @@
+{% load i18n %}
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <div class="title is-4 pb-2">{% trans "Confirmation" %}</div>
+            <div class="subtitle">
+                {% trans "Are you sure you want to delete?" %}
+            </div>
+            <div class="buttons">
+                <button id="cancel" class="button is-light">
+                    {% trans "Cancel" %}
+                </button>
+                <a class="button is-danger" href="{{ delete_url }}">
+                    {% trans "Delete" %}
+                </a>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<script>
+    const modal = document.querySelector('.modal');
+    const btn = document.querySelector('#delete');
+    const cancel = document.querySelector('#cancel');
+    const close = document.querySelector('.modal-close');
+
+    btn.addEventListener('click', () => {
+        modal.classList.add('is-active');
+    });
+
+    close.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+
+    cancel.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target.className === 'modal-background') {
+            modal.classList.remove('is-active');
+        }
+    });
+</script>
