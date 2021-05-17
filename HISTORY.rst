@@ -3,6 +3,9 @@
 History
 -------
 
+2.0.1 (2021-4-28)
++++++++++++++++++
+* Fix: consistent alignment of data in detail view
 
 2.0.0 (2021-4-28)
 +++++++++++++++++
