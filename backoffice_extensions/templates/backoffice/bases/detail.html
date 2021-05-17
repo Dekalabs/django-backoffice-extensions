@@ -16,19 +16,25 @@
             </div>
         </div>
         <hr>
-        <div class="columns">
-            <div class="column">
-                <table class="table is-fullwidth">
-                    {% for field in fields %}
-                        <tr>
-                            <th class="is-capitalized">{{ instance|verbose_name:field }}</th>
-                            <td>{{ instance|getattr:field }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+        {% for field in fields %}
+            <div class="columns is-gapless is-0 mt-2 mb-2">
+                <div class="column">
+                    <strong class="is-capitalized">{{ instance|verbose_name:field }}</strong>
+                </div>
+                <div class="column is-three-quarters">
+                    {{ instance|getattr:field }}
+                </div>
             </div>
-        </div>
+            {% if not forloop.last %}
+                <div class="is-divider mt-0 mb-0"></div>
+            {% endif %}
+        {% endfor %}
     </div>
     {% block extra_content %}
     {% endblock extra_content %}
 {% endblock content %}
+
+
+{% block footer %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-divider@0.2.0/dist/css/bulma-divider.min.css">
+{% endblock %}
