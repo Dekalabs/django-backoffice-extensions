@@ -66,7 +66,12 @@ class BackOfficeCreateView(BackOfficeFormView):
 class BackOfficeEditView(BackOfficeFormView):
     """Base view for editions."""
 
+    queryset: Optional[models.QuerySet] = None
     success_message = _("{instance} updated")
+
+    def get_queryset(self) -> Optional[models.QuerySet]:
+        """Gets the queryset in order to be able to access to annotated fields."""
+        return self.queryset
 
     def get_redirect_response(self, instance):
         model_class = self.get_model_class()
@@ -76,7 +81,13 @@ class BackOfficeEditView(BackOfficeFormView):
 
     def get(self, request, pk):
         model_class = self.get_model_class()
-        instance = get_object_or_404(model_class, pk=pk)
+        queryset = self.get_queryset()
+
+        if queryset:
+            instance = get_object_or_404(queryset, pk=pk)
+        else:
+            instance = get_object_or_404(model_class, pk=pk)
+
         form = self.form_class(instance=instance)
         context = {"form": form, "instance": instance}
         context.update(self.get_extra_context())
@@ -100,6 +111,7 @@ class BackOfficeEditView(BackOfficeFormView):
 class BackOfficeListView(LoginRequiredMixin, BackOfficeViewMixin, ListView):
     """Base view for lists."""
 
+    queryset: Optional[models.QuerySet] = None
     list_display: List = []
     filterset_class = None
 
@@ -140,11 +152,12 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
     def get_object(self, pk: int) -> models.Model:
         """Gets the object, using the queryset if provided to add annotation fields."""
         queryset = self.get_queryset()
-        if not queryset:
-            return get_object_or_404(self.model_class, pk=pk)
-        instance = queryset.filter(pk=pk).first()
-        if not instance:
-            raise Http404
+
+        if queryset:
+            instance = get_object_or_404(queryset, pk=pk)
+        else:
+            instance = get_object_or_404(self.model_class, pk=pk)
+
         return instance
 
     def get(self, request, pk):
@@ -158,9 +171,14 @@ class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
     """Base delete view."""
 
     uses_template = False
+    queryset: Optional[models.QuerySet] = None
     model_class: Type[models.Model] = models.Model
     success_message = _("{instance} deleted")
     protected_error_message = _("{instance} can't be deleted")
+
+    def get_queryset(self) -> Optional[models.QuerySet]:
+        """Gets the queryset in order to be able to access to annotated fields."""
+        return self.queryset
 
     def get_redirect_response(self):
         return redirect(f"{URL_NAMESPACE}:{self.model_class._meta.model_name}-list")
@@ -169,9 +187,20 @@ class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
         """Overwrite to handle the deletion. By default, it uses model delete."""
         instance.delete()
 
+    def get_object(self, pk: int) -> models.Model:
+        """Gets the object, using the queryset if provided to add annotation fields."""
+        queryset = self.get_queryset()
+
+        if queryset:
+            instance = get_object_or_404(queryset, pk=pk)
+        else:
+            instance = get_object_or_404(self.model_class, pk=pk)
+
+        return instance
+
     def get(self, request, pk):
         """Gets the instance and calls to perform delete."""
-        instance = get_object_or_404(self.model_class, pk=pk)
+        instance = self.get_object(pk=pk)
         instance_str = str(instance)
         try:
             self.perform_delete(instance=instance)
