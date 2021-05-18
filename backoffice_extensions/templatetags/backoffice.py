@@ -52,7 +52,11 @@ def sidebar_menu(context):
                         active,
                     )
                 )
-        sidebar.append((group_label, sections_data))
+
+        # If the group is empty skip it
+        if sections_data:
+            sidebar.append((group_label, sections_data))
+
     return {"sidebar": sidebar}
 
 
