@@ -23,3 +23,4 @@ class StuffDetailView(BackOfficeDetailView):
 
 class StuffDeleteView(BackOfficeDeleteView):
     model_class = Stuff
+    queryset = StuffListView.queryset
