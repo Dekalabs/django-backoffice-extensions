@@ -3,10 +3,13 @@
 History
 -------
 
+2.1.0 (2021-9-23)
++++++++++++++++++
+* Feat: add get_queryset to (almost) all base views
+
 2.0.2 (2021-5-18)
 +++++++++++++++++
 * Fix: sidebar groups permissions 
-
 
 2.0.1 (2021-5-17)
 +++++++++++++++++
