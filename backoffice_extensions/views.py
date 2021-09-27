@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.db.models import ProtectedError
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views import View
@@ -82,12 +81,10 @@ class BackOfficeEditView(BackOfficeFormView):
     def get(self, request, pk):
         model_class = self.get_model_class()
         queryset = self.get_queryset()
-
         if queryset:
             instance = get_object_or_404(queryset, pk=pk)
         else:
             instance = get_object_or_404(model_class, pk=pk)
-
         form = self.form_class(instance=instance)
         context = {"form": form, "instance": instance}
         context.update(self.get_extra_context())
@@ -113,7 +110,7 @@ class BackOfficeListView(LoginRequiredMixin, BackOfficeViewMixin, ListView):
 
     queryset: Optional[models.QuerySet] = None
     list_display: List = []
-    filterset_class = None
+    filterset_class: Optional[Type] = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -123,7 +120,9 @@ class BackOfficeListView(LoginRequiredMixin, BackOfficeViewMixin, ListView):
         """Uses the FilterSet class to filter the query."""
         queryset = super().get_queryset()
         if self.filterset_class:
-            self.filter = self.filterset_class(self.request.GET, queryset=queryset)
+            self.filter = self.filterset_class(
+                self.request.GET, queryset=queryset, request=self.request
+            )
             queryset = self.filter.qs
         return queryset
 
@@ -190,7 +189,6 @@ class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
     def get_object(self, pk: int) -> models.Model:
         """Gets the object, using the queryset if provided to add annotation fields."""
         queryset = self.get_queryset()
-
         if queryset:
             instance = get_object_or_404(queryset, pk=pk)
         else:

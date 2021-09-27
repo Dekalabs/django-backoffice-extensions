@@ -120,7 +120,7 @@ class ExportMixin:
     def get(self, request, *args, **kwargs):
         items: "QuerySet" = self.get_queryset()
         if self.filterset_class:
-            _filter = self.filterset_class(request.GET, queryset=items)
+            _filter = self.filterset_class(request.GET, queryset=items, request=request)
             items = _filter.qs
         fields: List = [
             field[0] if isinstance(field, tuple) else field for field in self.fields
