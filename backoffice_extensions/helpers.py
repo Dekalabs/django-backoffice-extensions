@@ -2,11 +2,14 @@ import collections
 import csv
 import datetime
 import io
+from typing import Any, Dict, Optional
 
 from django.utils import timezone
 
 
-def create_csv_from_data(data, stream=None):
+def create_csv_from_data(
+    data: Dict, stream: Optional["io.StringIO"] = None
+) -> "io.StringIO":
     """Creates a CSV stream using the given dict, in where the keys are
     the columns and each value is a list of results.
     """
@@ -20,7 +23,9 @@ def create_csv_from_data(data, stream=None):
     return stream
 
 
-def age_range_filter(field, min_age=None, max_age=None):
+def age_range_filter(
+    field: Any, min_age: Optional[int] = None, max_age: Optional[int] = None
+) -> Dict:
     """Returns the filter for the age range."""
     current = timezone.now().date()
     _filter = {}

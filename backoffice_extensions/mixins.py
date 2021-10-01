@@ -1,7 +1,8 @@
 import collections
 from functools import reduce
-from typing import TYPE_CHECKING, AnyStr, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
+from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse
 from django.urls import NoReverseMatch, reverse
@@ -15,7 +16,7 @@ from backoffice_extensions.settings import (
 )
 
 if TYPE_CHECKING:
-    from django.db.models import QuerySet
+    from django.http import HttpRequest, HttpResponse
 
 
 class BackOfficeViewMixin:
@@ -60,7 +61,7 @@ class SearchListMixin:
     search_param: str = "search"
     search_fields: List = []
 
-    def _search_filter(self, queryset) -> "QuerySet":
+    def _search_filter(self, queryset) -> "models.QuerySet":
         """Applies search filtering to queryset."""
         search_query = self.request.GET.get(self.search_param)  # type: ignore
         if search_query:
@@ -74,7 +75,7 @@ class SearchListMixin:
                 ).distinct()
         return queryset
 
-    def get_queryset(self) -> "QuerySet":
+    def get_queryset(self) -> "models.QuerySet":
         """Checks the 'search' variable to allow generic search."""
         queryset = super().get_queryset()  # type: ignore
         queryset = self._search_filter(queryset)
@@ -90,11 +91,11 @@ class SearchListMixin:
         return context
 
 
-class ExportMixin:
+class CSVExportMixin:
     """Mixin to allow export CSV data."""
 
     filename: str = "data.csv"
-    queryset: "QuerySet" = None
+    queryset: "models.QuerySet" = None
     filterset_class = None
     fields: List = []
 
@@ -103,7 +104,7 @@ class ExportMixin:
         if self.queryset is None:
             raise NotImplementedError("You should specify the queryset attribute.")
 
-    def get_csv_response(self, data):
+    def get_csv_response(self, data: Dict) -> "HttpResponse":
         response = HttpResponse(content_type="text/csv")
         response[
             "Content-Disposition"
@@ -114,11 +115,27 @@ class ExportMixin:
     def get_filename(self) -> str:
         return self.filename
 
-    def get_queryset(self) -> "QuerySet":
+    def get_queryset(self) -> "models.QuerySet":
         return self.queryset
 
-    def get(self, request, *args, **kwargs):
-        items: "QuerySet" = self.get_queryset()
+    def _default_convert_value(self, value: Any) -> Any:
+        """Default value converter."""
+        if isinstance(value, models.Manager):
+            value = ", ".join([str(element) for element in value.all()])
+        elif hasattr(value, "__call__"):
+            value = value()
+        return value
+
+    def convert_value(self, value: Any) -> Tuple[Any, bool]:
+        """Function to handle the value. It should return a tuple where the first
+        value is the handled value and the second is if the value was handled or not.
+
+        This method should be overwrite by children classes.
+        """
+        return value, False
+
+    def get(self, request: "HttpRequest", *args, **kwargs) -> "HttpResponse":
+        items: "models.QuerySet" = self.get_queryset()
         if self.filterset_class:
             _filter = self.filterset_class(request.GET, queryset=items, request=request)
             items = _filter.qs
@@ -133,7 +150,12 @@ class ExportMixin:
         for item in items.iterator():
             for field in fields:
                 value = getattr(item, field)
-                if hasattr(value, "__call__"):
-                    value = value()
+                value, converted = self.convert_value(value)
+                # If not handled, uses the default value converters
+                if not converted:
+                    value = self._default_convert_value(value)
                 data[field].append(value)
         return self.get_csv_response(data=data)
+
+
+ExportMixin = CSVExportMixin  # Alias for compatibility

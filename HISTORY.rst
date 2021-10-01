@@ -3,6 +3,12 @@
 History
 -------
 
+2.2.0 (2021-10-1)
++++++++++++++++++
+
+* Feat: changed name for actions block in list template
+* Feat: added custom converters to export view mixin
+
 2.1.1 (2021-9-27)
 +++++++++++++++++
 
