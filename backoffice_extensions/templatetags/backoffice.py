@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
@@ -156,10 +158,13 @@ def verbose_name(model_or_queryset, field):
 
 
 @register.filter
-def statistics_value(value):
+def statistics_value(value, float_format: Optional[str] = None):
     if not isinstance(value, StatisticsValue):
         return intcomma(value)
-    result = f"{intcomma(value.value)}"
+    if isinstance(value.value, float):
+        result = f"{defaultfilters.floatformat(value.value, float_format)}"
+    else:
+        result = f"{intcomma(value.value)}"
     if value.percentage:
-        result = f"{defaultfilters.floatformat(value.value, 2)} %"
+        result = f"{result} %"
     return result
