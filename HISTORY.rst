@@ -3,6 +3,12 @@
 History
 -------
 
+
+3.0.0 (2022-03-30)
++++++++++++++++++
+
+* Feat: added support to enable multiple backoffice sites in the same project.
+
 2.2.1 (2021-10-22)
 +++++++++++++++++
 
