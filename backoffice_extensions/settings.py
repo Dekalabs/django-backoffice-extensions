@@ -11,7 +11,7 @@ SECRET_KEY = "backoffice"
 def get_backoffice_settings_attribute(attribute: str, default: Any) -> Any:
     """Gets the value from the dict, depending on the BACKOFFICE_SITE value."""
     site = getattr(settings, "BACKOFFICE_SITE", "default")
-    return getattr(settings, "BACKOFFICE").get(site, {}).get(attribute, default)
+    return getattr(settings, "BACKOFFICE", {}).get(site, {}).get(attribute, default)
 
 
 TITLE = get_backoffice_settings_attribute("TITLE", "backoffice")

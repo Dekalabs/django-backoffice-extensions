@@ -67,23 +67,27 @@ WSGI_APPLICATION = "tests.wsgi.application"
 
 # DJANGO BACKOFFICE
 # ------------------------------------------------------------------------------
-BACKOFFICE_STATUS_TAG_CLASSES = {
-    IDLE: "is-warning",
-    ACTIVE: "is-success",
-    ERROR: "is-danger",
-}
-BACKOFFICE_SIDEBAR_CONFIG = [
-    {
-        "label": _("Data"),
-        "sections": {
-            "user": {
-                "label": _("User"),
-                "permission": None,
-            },
-            "stuff": {
-                "label": _("Stuff"),
-                "permission": None,
-            },
+BACKOFFICE = {
+    "default": {
+        "STATUS_TAG_CLASSES": {
+            IDLE: "is-warning",
+            ACTIVE: "is-success",
+            ERROR: "is-danger",
         },
+        "SIDEBAR_CONFIG": [
+            {
+                "label": _("Data"),
+                "sections": {
+                    "user": {
+                        "label": _("User"),
+                        "permission": None,
+                    },
+                    "stuff": {
+                        "label": _("Stuff"),
+                        "permission": None,
+                    },
+                },
+            }
+        ],
     }
-]
+}
