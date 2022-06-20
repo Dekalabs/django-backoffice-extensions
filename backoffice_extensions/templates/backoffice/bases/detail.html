@@ -1,40 +1,37 @@
-{% extends "backoffice/sidebar.html" %}
+{% extends "backoffice/layouts/default.html" %}
 {% load static %}
 {% load i18n %}
 
 {% load backoffice %}
 
 {% block content %}
-    <div class="has-box mb-4">
-        <div class="mb-2 is-flex is-align-items-center has-flex-items">
-            <div class="is-block">
+    <div class="border-2 p-6 bg-white mb-4">
+        <div class="mb-2 flex items-center justify-between">
+            <div>
                 {% block title %}{% endblock %}
             </div>
-            <div style="margin-left: auto">
+            <div class="flex gap-4">
                 {% block actions %}
                 {% endblock actions %}
             </div>
         </div>
-        <hr>
+        
+        <hr class="border-2 my-6">
+
         {% for field in fields %}
-            <div class="columns is-gapless is-0 mt-2 mb-2">
-                <div class="column">
-                    <strong class="is-capitalized">{{ instance|verbose_name:field }}</strong>
+            <div class="grid grid-cols-4">
+                <div class="col-span-1 px-6 py-3">
+                    <strong class="capitalize">{{ instance|verbose_name:field }}</strong>
                 </div>
-                <div class="column is-three-quarters">
+                <div class="col-span-3 px-6 py-3">
                     {{ instance|getattr:field }}
                 </div>
             </div>
             {% if not forloop.last %}
-                <div class="is-divider mt-0 mb-0"></div>
+                <hr>
             {% endif %}
         {% endfor %}
     </div>
     {% block extra_content %}
     {% endblock extra_content %}
 {% endblock content %}
-
-
-{% block footer %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-divider@0.2.0/dist/css/bulma-divider.min.css">
-{% endblock %}

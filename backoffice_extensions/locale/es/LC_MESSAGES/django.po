@@ -68,11 +68,11 @@ msgstr "Siguiente"
 msgid "Search"
 msgstr "Buscar"
 
-#: backoffice_extensions/templates/backoffice/sidebar.html:20
+#: backoffice_extensions/templates/backoffice/layouts/default.html:20
 msgid "Sign out"
 msgstr "Salir"
 
-#: backoffice_extensions/templates/backoffice/sidebar.html:45
+#: backoffice_extensions/templates/backoffice/layouts/default.html:45
 #, python-format
 msgid ""
 "\n"

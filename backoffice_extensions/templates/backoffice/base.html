@@ -9,244 +9,41 @@
     <meta charset="utf-8">
     <title>{% block header_title %}{{ backoffice_title }}{% endblock header_title %}</title>
     {% block extra_header %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <style>
-            .layout {
-                min-height: calc(100vh - 117px);
-            }
-
-            html {
-                background-color: #f7fafc;
-            }
-
-            .filters {
-                position: sticky;
-                top: 2em;
-            }
-
-            .is-full-width {
+            input, textarea, select {
+                background-color: #edf2f7;
+                padding: 0.5rem 0.75rem !important;
+                border-radius: 0.25rem;
                 width: 100%;
             }
 
-            .is-full-height {
-                height: 100%;
+            .success {
+                background-color: #00c851;
             }
 
-            .navbar-item img {
-                max-height: 4.75rem;
+            .warning {
+                background-color: #ffbb33;
             }
 
-            .has-border-bottom {
-                border-bottom: 1px solid rgba(255, 255, 255, .1);
+            .danger {
+                background-color: #ff4444;
             }
 
-            .has-border-top {
-                border-top: 1px solid rgba(255, 255, 255, .1);
-            }
-
-            .field .label {
-                font-size: 1em;
-            }
-
-            .input {
-                box-shadow: none;
-                backdrop-filter: blur(50px);
-                background-color: rgba(0, 0, 0, .05);
-                border: none;
-                border-radius: 4px;
-            }
-
-            .input:active, .input:focus {
-                border: none;
-                box-shadow: none;
-            }
-
-            p {
-                color: #eee !important;
-            }
-
-            .menu {
-                position: fixed;
-                display: inline-block;
-                min-width: 15rem;
-                font-size: 1rem;
-                background-color: {{ backoffice_primary_bg_color }};
-                height: 100vh;
-                z-index: 1;
-            }
-
-            .menu * {
-                color: #fff !important;
-            }
-
-            .menu-list {
-                line-height: 1.25;
-            }
-
-            .menu-list a {
-                opacity: .7;
-                transition: 300ms;
-                border-left: .25em solid transparent !important;
-                border-radius: 0;
-                display: block;
-                padding: .5rem 0 .5rem 1em;
-            }
-
-            .menu-list a:hover {
-                opacity: 1;
-                border-left: .25em solid rgba(255, 255, 255, .25) !important;
-                background-color: transparent !important;
-            }
-
-            .menu-list a.is-active {
-                font-weight: 500 !important;
-                background-color: transparent !important;
-                border-left: .25em solid rgba(255, 255, 255, .25) !important;
-                opacity: 1;
-            }
-
-            .footer {
-                background-color: #eee;
-                font-size: 14px;
-                padding: 3rem 1.5rem;
-            }
-
-            .card {
-                box-shadow: rgba(0, 0, 0, 0.05) 0 0 5px;
-                border-radius: 0;
-            }
-
-            .has-box {
-                border-radius: .25rem;
-                border: 2px solid #e2e8f0;
+            .button {
                 background-color: #fff;
-                padding: 1.25rem;
-            }
-
-            .input.search {
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-                background-color: #eee;
-            }
-
-            .display-grid {
-                display: grid !important;
-            }
-
-            .menu-label {
-                margin-top: .75rem;
-                margin-bottom: .75rem;
-                color: #666f81;
-                font-size: .75em;
-                letter-spacing: .1em;
-                text-transform: uppercase;
-                padding: 0 .75rem;
-            }
-
-            .help {
-                color: #666f81 !important;
-            }
-
-            .is-strong-border-left {
-                border-left: 4px solid #ededed80;
-            }
-
-            .table td, .table th {
-                border-width: 0 0 1px !important;
-            }
-
-            .table tbody tr:last-child td, .table tbody tr:last-child th {
-                border-bottom-width: 0 !important;
-            }
-
-            .navbar-link.is-active, .navbar-link:hover, a.navbar-item.is-active, a.navbar-item:hover {
-                background-color: #e2e2e324;
-                color: #fff;
-            }
-
-            .columns:not(:last-child) {
-                margin-bottom: calc(2.5rem - .75rem);
-            }
-
-            hr {
-                background-color: #ededed80;
-                height: 4px;
-            }
-
-            .navbar-link.is-active, .navbar-link:hover, .navbar-link:focus, .navbar-link:focus-within, .navbar-link:hover, a.navbar-item.is-active, a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover {
-                background-color: transparent !important;
-                color: #fff !important;
-                outline: none;
-            }
-
-            .content {
-                margin-left: 13.5rem;
-            }
-
-            .is-error {
-                background-color: #ffdd57;
-                color: rgba(0, 0, 0, .7);
-            }
-
-            .is-primary, .button.is-primary, .button.is-primary.is-hovered, .button.is-primary:hover {
-                background-color: {{ backoffice_primary_bg_color }};
-                color: {{ backoffice_primary_color }};
-            }
-
-            .button.is-focused:not(:active), .button:focus:not(:active) {
-                box-shadow: none;
-            }
-
-            .button.is-focused, .button:focus {
-                border-color: transparent;
-            }
-
-            .button.is-primary.is-outlined.is-hovered, .button.is-primary.is-outlined:hover,
-            .button.is-primary.is-outlined.is-focused, .button.is-primary.is-outlined:focus {
-                background-color: {{ backoffice_primary_bg_color }};
-                border-color: {{ backoffice_primary_bg_color }};
-            }
-
-            .button.is-primary.is-outlined {
-                background-color: transparent;
-                border-color: {{ backoffice_primary_bg_color }};
-                color: {{ backoffice_primary_bg_color }};
-                transition: 200ms;
-            }
-
-            @media (max-width: 768px) {
-                .menu {
-                    position: relative;
-                    height: auto;
-                }
-
-                .content {
-                    margin-left: 0;
-                }
-
-                .content .has-flex-items {
-                    display: block !important;
-                }
-
-                .content .has-flex-items > * {
-                    padding-bottom: 1em;
-                }
-
-                .reverse-columns {
-                    flex-direction: column-reverse;
-                    display: flex;
-                }
-
-                .reverse-columns .is-strong-border-left {
-                    border-left-width: 0;
-                    border-bottom: 4px solid #ededed80;
-                    margin: .75rem .75rem 0 !important;
-                    padding: 0 0 2rem !important;
-                }
+                border-color: #dbdbdb;
+                border-width: 1px;
+                border-radius: 0.25rem;
+                color: #363636;
+                cursor: pointer;
+                justify-content: center;
+                padding: .5em 1em;
+                text-align: center;
+                white-space: nowrap;
             }
         </style>
     {% endblock extra_header %}

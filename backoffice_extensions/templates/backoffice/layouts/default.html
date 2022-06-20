@@ -1,0 +1,53 @@
+{% extends "backoffice/base.html" %}
+{% load i18n %}
+{% load backoffice %}
+
+{% block body %}
+  <div class="h-screen w-full grid grid-cols-8">
+    <div class="col-span-1 bg-slate-900">
+        {% block sidebar %}
+            <aside class="flex flex-col justify-between h-full">
+                <div class="flex justify-center items-center border-b border-slate-50/[0.06]">
+                    <a href="{{ index_url }}" class="text-white text-2xl font-bold p-4">
+                        {{ backoffice_title }}
+                    </a>
+                </div>
+
+                {% sidebar_menu %}
+
+                <div class="p-4 border-t border-slate-50/[0.06]">
+                    <a href="{{ sign_out }}" class="text-white">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="pl-2">{% trans "Sign out" %}</span>
+                    </a>
+                </div>
+            </aside>
+        {% endblock sidebar %}
+    </div>
+    <div class="col-span-7 main-wrapper overflow-auto">
+        <div class="min-h-[90vh] p-6 bg-slate-100">
+            {% for message in messages %}
+                <div class="p-4 mb-4 text-white flex justify-between {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                    <button onclick="this.parentElement.style.display='none'">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            {% endfor %}
+            
+            <section>
+                {% block content %}
+                {% endblock content %}
+            </section>
+        </div>
+
+        {% block footer %}
+            <footer class="flex justify-center items-center bg-slate-300 h-[10vh]">
+                {% blocktrans %}
+                    <strong>{{ backoffice_title }}</strong>'s backoffice panel.
+                {% endblocktrans %}
+            </footer>
+        {% endblock footer %}
+    </div>
+  </div>
+{% endblock body %}

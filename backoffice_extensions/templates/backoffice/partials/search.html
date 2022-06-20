@@ -1,9 +1,9 @@
 {% load i18n %}
 <form method="get">
-  <div class="control has-icons-left">
-    <input class="input search" type="text" placeholder="{% trans "Search" %}..." name="search" value="{{ search }}">
-    <span class="icon is-small is-left">
+  <div class="relative">
+    <input type="text" placeholder="{% trans "Search" %}..." name="search" value="{{ search }}">
+    <div class="absolute right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center text-gray-400">
       <i class="fas fa-search"></i>
-    </span>
+    </div>
   </div>
 </form>

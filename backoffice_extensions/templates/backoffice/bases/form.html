@@ -1,54 +1,47 @@
-{% extends "backoffice/sidebar.html" %}
+{% extends "backoffice/layouts/default.html" %}
 {% load i18n %}
 {% load static %}
 
 {% block content %}
-    <div class="has-box">
-        {% block title %}{% endblock title %}
-        <hr>
-        <div class="columns">
-            <div class="column">
-                <form method="post" {% block extra_form %}{% endblock extra_form %}>
-                    {% csrf_token %}
-                    {% for field in form %}
-                        {% if field.is_hidden %}
-                            {{ field }}
-                        {% else %}
-                            <div class="field is-horizontal">
-                                <div class="field-label is-normal">
-                                    <label class="label">{{ field.label }} {% if field.field.required %}
-                                        *{% endif %}</label>
-                                </div>
-                                <div class="field-body">
-                                    <div class="field">
-                                        {{ field }}
-                                        {% if field.help_text %}
-                                            <p class="help">{{ field.help_text }}</p>
-                                        {% endif %}
-                                        {% for error in field.errors %}
-                                            <p class="help has-text-danger">{{ error }}</p>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    <div class="field is-horizontal py-4">
-                        <div class="field-label"></div>
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    {% block control %}
-                                        <button class="button is-primary" type="submit">{% trans "Save" %}</button>
-                                    {% endblock control %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+<div class="border-2 p-6 bg-white">
+    <form method="post" {% block extra_form %}{% endblock extra_form %}>
+        <div class="flex justify-between items-center">
+            {% block title %}{% endblock title %}
+            <div>
+                {% block control %}
+                    <button class="button bg-slate-900 text-white" type="submit">{% trans "Save" %}</button>
+                {% endblock control %}
             </div>
         </div>
-    </div>
+        <hr class="border-2 my-6">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% else %}
+                <div class="grid grid-cols-4">
+                    <div class="col-span-1 px-6 py-3">
+                        <label class="font-bold">
+                            {{ field.label }} {% if field.field.required %}*{% endif %}
+                        </label>
+                    </div>
+                    <div class="col-span-3 px-6 py-3">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <p class="text-xs pt-2">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="text-xs text-red-500 pt-2">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </form>
+</div>
 {% endblock content %}
 
 {% block footer %}

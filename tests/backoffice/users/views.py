@@ -10,6 +10,7 @@ from backoffice_extensions.views import (
     BackOfficeEditView,
     BackOfficeListView,
 )
+from tests.backoffice.users.filters import UserFilter
 from tests.backoffice.users.forms import CreationUserForm, UserForm
 
 User = get_user_model()
@@ -26,6 +27,7 @@ class UserListView(SearchListMixin, BackOfficeListView):
     ]
     paginate_by = 15
     list_display = ["id", "first_name", "last_name", "username", "date_joined"]
+    filterset_class = UserFilter
 
 
 class UserCreateView(BackOfficeCreateView):

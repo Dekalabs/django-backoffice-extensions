@@ -3,22 +3,16 @@
 {% load backoffice %}
 
 {% block title %}
-    <div class="title is-4">{% trans "Data for user" %} {{ instance.get_full_name }}</div>
+    <div class="font-bold text-2xl">{% trans "Data for user" %} {{ instance.get_full_name }}</div>
 {% endblock title %}
 
 {% block actions %}
-    <div class="field is-grouped">
-        <p class="control">
-            <a class="button is-primary" href="{% url "backoffice:user-edit" pk=instance.pk %}">
-                {% trans "Edit" %}
-            </a>
-        </p>
-        <p class="control">
-            <button id="delete" class="button is-danger">
-                {% trans "Delete" %}
-            </button>
-        </p>
-    </div>
+    <a class="button text-white bg-slate-900" href="{% url "backoffice:user-edit" pk=instance.pk %}">
+        {% trans "Edit" %}
+    </a>
+    <button id="delete" class="button text-white bg-red-500">
+        {% trans "Delete" %}
+    </button>
 {% endblock actions %}
 
 {% block extra_content %}
