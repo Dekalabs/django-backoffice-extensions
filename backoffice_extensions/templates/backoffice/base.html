@@ -10,7 +10,6 @@
     <title>{% block header_title %}{{ backoffice_title }}{% endblock header_title %}</title>
     {% block extra_header %}
         <script src="https://cdn.tailwindcss.com"></script>
-        <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <style>
@@ -19,6 +18,20 @@
                 padding: 0.5rem 0.75rem !important;
                 border-radius: 0.25rem;
                 width: 100%;
+            }
+
+            .button[type=button], 
+            .button[type=reset], 
+            .button[type=submit], 
+            .button {
+                border-radius: 0.25rem;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: .5em 1em;
+                white-space: nowrap;
+                gap: 0.5rem;
             }
 
             .success {
@@ -33,17 +46,24 @@
                 background-color: #ff4444;
             }
 
-            .button {
-                background-color: #fff;
-                border-color: #dbdbdb;
-                border-width: 1px;
-                border-radius: 0.25rem;
-                color: #363636;
-                cursor: pointer;
-                justify-content: center;
-                padding: .5em 1em;
-                text-align: center;
-                white-space: nowrap;
+            .bg-primary {
+                background-color: {{ backoffice_primary_color }} !important;
+            }
+
+            .text-primary {
+                color: {{ backoffice_primary_color }} !important;
+            }
+
+            .border-primary {
+                border-color: {{ backoffice_primary_color }} !important;
+            }
+
+            .bg-accent {
+                background-color: {{ backoffice_accent_color }} !important;
+            }
+
+            .text-accent {
+                color: {{ backoffice_accent_color }} !important;
             }
         </style>
     {% endblock extra_header %}

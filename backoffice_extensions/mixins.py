@@ -9,8 +9,9 @@ from django.urls import NoReverseMatch, reverse
 
 from backoffice_extensions.helpers import create_csv_from_data
 from backoffice_extensions.settings import (
-    PRIMARY_BG_COLOR,
+    LOGO,
     PRIMARY_COLOR,
+    ACCENT_COLOR,
     TITLE,
     URL_NAMESPACE,
 )
@@ -46,8 +47,9 @@ class BackOfficeViewMixin:
             sign_in = ""
         return {
             "backoffice_title": TITLE,
-            "backoffice_primary_bg_color": PRIMARY_BG_COLOR,
+            "backoffice_logo": LOGO,
             "backoffice_primary_color": PRIMARY_COLOR,
+            "backoffice_accent_color": ACCENT_COLOR,
             "index_url": index_url,
             "sign_out": sign_out,
             "sign_in": sign_in,

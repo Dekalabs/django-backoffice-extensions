@@ -5,8 +5,8 @@
 {% load static %}
 
 {% block content %}
-<div class="flex gap-6">
-    <div class="border-2 p-6 bg-white w-full">
+<div class="flex gap-8">
+    <div class="p-6 bg-white w-full shadow rounded">
         <div class="mb-2 flex items-center justify-between">
             <div>
                 {% block title %}{% endblock title %}
@@ -17,7 +17,7 @@
                 {% endblock actions %}
             </div>
         </div>
-        <hr class="border-2 my-6">
+        <hr class="border-4 my-6 border-gray-100">
         {% if page_obj %}
             <div class="table-container">
                 <table class="table-auto w-full text-left">
@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                     {% for obj in page_obj %}
-                        <tr class="border-b">
+                        <tr {% if not forloop.last %}class="border-b"{% endif %}>
                             {% for field in list_display %}
                                 {% if forloop.first %}
                                     <th class="px-6 py-3">
@@ -51,13 +51,16 @@
                 {% include "backoffice/partials/pagination.html" %}
             {% endif %}
         {% else %}
-            <div class="is-flex is-full-height is-justify-content-center is-align-items-center has-flex-items">
-                <span class="subtitle is-6 py-4">{% trans "No results found." %}</span>
+            <div class="flex items-center gap-2 text-gray-600 font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                <span>{% trans "No results found." %}</span>
             </div>
         {% endif %}
     </div>
     {% if filter %}
-        <div class="border-2 p-6 bg-white">
+        <div class="p-6 bg-white shadow rounded">
             {% include "backoffice/partials/filters.html" %}
         <div>
     {% endif %}

@@ -1,12 +1,12 @@
-{% for section, entries in sidebar %}
 <div class="h-full">
-    <p class="p-3 text-slate-400">{{ section }}</p>
-    <div class="text-slate-400 flex flex-col gap-4">
-        {% for url, label, active in entries %}
-            <a href="{{ url }}" class="{% if active %}text-white border-l-4 border-slate-400 pl-5{% else %}pl-6{% endif %}">
-                {{ label }}
-            </a>
-        {% endfor %}
-    </div>
+    {% for section, entries in sidebar %}
+        <p class="p-4 text-gray-900 font-bold border-b border-gray-200">{{ section }}</p>
+        <div class="text-gray-900 flex flex-col font-semibold border-b border-gray-200">
+            {% for url, label, active in entries %}
+                <a href="{{ url }}" class="py-3 {% if active %}text-primary border-l-4 border-primary pl-7{% else %}pl-8{% endif %}">
+                    {{ label }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </div>
-{% endfor %}
