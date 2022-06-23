@@ -7,7 +7,7 @@ USE_TZ = True
 
 SECRET_KEY = "dummy"
 
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "mydatabase"}}
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 
 INSTALLED_APPS = [
     "django.forms",
@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     "backoffice_extensions",
     "tests.app.apps.TestAppConfig",
     "tests.backoffice.apps.BackofficeAppConfig",
-    "django_filters"
 ]
 
 ROOT_URLCONF = "tests.urls"
