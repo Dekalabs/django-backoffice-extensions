@@ -1,9 +1,9 @@
 <div class="h-full">
     {% for section, entries in sidebar %}
-        <p class="p-4 text-gray-900 font-bold border-b border-gray-200">{{ section }}</p>
-        <div class="text-gray-900 flex flex-col font-semibold border-b border-gray-200">
+        <p class="p-4 text-white font-bold bg-white/5">{{ section }}</p>
+        <div class="text-gray-300 flex flex-col font-normal">
             {% for url, label, active in entries %}
-                <a href="{{ url }}" class="py-3 {% if active %}text-primary border-l-4 border-primary pl-7{% else %}pl-8{% endif %}">
+                <a href="{{ url }}" class="py-2 {% if active %}text-white border-l-4 pl-7{% else %}pl-8{% endif %}">
                     {{ label }}
                 </a>
             {% endfor %}
