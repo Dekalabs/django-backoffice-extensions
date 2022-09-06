@@ -9,9 +9,9 @@ from django.urls import NoReverseMatch, reverse
 
 from backoffice_extensions.helpers import create_csv_from_data
 from backoffice_extensions.settings import (
+    ACCENT_COLOR,
     LOGO,
     PRIMARY_COLOR,
-    ACCENT_COLOR,
     TITLE,
     URL_NAMESPACE,
 )
