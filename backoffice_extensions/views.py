@@ -40,13 +40,13 @@ class BackOfficeCreateView(BackOfficeFormView):
 
     success_message: str = _("{instance} created")
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         form = self.form_class()
         context = {"form": form}
         context.update(self.get_extra_context())
         return render(request, self.template_name, context=context)
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         model_class = self.get_model_class()
         form = self.form_class(request.POST, request.FILES)
         context = {"form": form}
@@ -78,7 +78,7 @@ class BackOfficeEditView(BackOfficeFormView):
             f"{URL_NAMESPACE}:{model_class._meta.model_name}-detail", pk=instance.pk
         )
 
-    def get(self, request, pk):
+    def get(self, request, pk, **kwargs):
         model_class = self.get_model_class()
         queryset = self.get_queryset()
         if queryset:
@@ -90,7 +90,7 @@ class BackOfficeEditView(BackOfficeFormView):
         context.update(self.get_extra_context())
         return render(request, self.template_name, context=context)
 
-    def post(self, request, pk):
+    def post(self, request, pk, **kwargs):
         model_class = self.get_model_class()
         instance = get_object_or_404(model_class, pk=pk)
         form = self.form_class(request.POST, request.FILES, instance=instance)
@@ -196,7 +196,7 @@ class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
 
         return instance
 
-    def get(self, request, pk):
+    def get(self, request, pk, **kwargs):
         """Gets the instance and calls to perform delete."""
         instance = self.get_object(pk=pk)
         instance_str = str(instance)
@@ -227,7 +227,7 @@ class BackOfficeIndexView(BackOfficeViewMixin, View):
         """Overwrite to add context to the view."""
         return {}
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         if not request.user.is_authenticated:
             return redirect(self.sign_in_redirect)
         context = self.get_context_data()

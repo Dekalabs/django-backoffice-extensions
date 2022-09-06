@@ -3,6 +3,21 @@
 History
 -------
 
+3.1.1 (2022-06-17)
+++++++++++++++++++
+
+* Fix: Optional default_app_config
+
+3.1.0 (2022-06-17)
+++++++++++++++++++
+
+* Feat: Support for Django 4.0
+
+3.0.0 (2022-03-30)
++++++++++++++++++
+
+* Feat: added support to enable multiple backoffice sites in the same project.
+
 2.2.1 (2021-10-22)
 +++++++++++++++++
 
