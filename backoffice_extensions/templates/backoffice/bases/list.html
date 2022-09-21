@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="grid grid-cols-12 gap-8">
-    <div class="p-6 bg-white w-full shadow rounded col-span-10">
+    <div class="p-6 bg-white w-full shadow rounded col-span-{% if filter %}10{% else %}12{% endif %}">
         <div class="mb-2 flex items-center justify-between">
             <div>
                 {% block title %}{% endblock title %}
