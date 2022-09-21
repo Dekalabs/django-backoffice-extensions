@@ -78,8 +78,8 @@ def boolean_icon(value):
 def status_tag(value):
     """Gets a status tag with the corresponding class."""
     result = (
-        f'<span class="text-sm rounded px-2 py-1 {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
-        f"{value.get_status_display()}</span>"
+        f'<div class="text-sm text-center rounded px-2 py-1 {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
+        f"{value.get_status_display()}</div>"
     )
     return mark_safe(result)
 
