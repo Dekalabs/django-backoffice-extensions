@@ -76,10 +76,10 @@ def boolean_icon(value):
 
 @register.filter
 def status_tag(value):
-    """Gets an icon for given boolean value."""
+    """Gets a status tag with the corresponding class."""
     result = (
-        f'<span class="tag {STATUS_TAG_CLASSES.get(value.status, "")}">'
-        f"{value.get_status_display()}</i>"
+        f'<span class="text-sm rounded px-2 py-1 {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
+        f"{value.get_status_display()}</span>"
     )
     return mark_safe(result)
 
@@ -96,14 +96,14 @@ def getattr_filter(obj, name):
             value = boolean_icon(value)
         if isinstance(value, ImageFieldFile):
             if value:
-                value = mark_safe(f'<img src="{value.url}" />')
+                value = mark_safe(f'<img src="{value.url}" class="max-w-xl" />')
             else:
                 value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
             if value.exists():
-                tags = '<div class="tags">'
+                tags = '<div class="flex gap-2 text-sm">'
                 for item in value.all():
-                    tags += f'<span class="tag">{str(item)}</span>'
+                    tags += f'<span class="rounded bg-gray-200 px-2 py-1">{str(item)}</span>'
                 value = mark_safe(tags + "</div>")
             else:
                 value = NONE_VALUE

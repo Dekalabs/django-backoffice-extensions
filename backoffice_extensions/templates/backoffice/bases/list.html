@@ -5,8 +5,8 @@
 {% load static %}
 
 {% block content %}
-<div class="flex gap-8">
-    <div class="p-6 bg-white w-full shadow rounded">
+<div class="grid grid-cols-12 gap-8">
+    <div class="p-6 bg-white w-full shadow rounded col-span-10">
         <div class="mb-2 flex items-center justify-between">
             <div>
                 {% block title %}{% endblock title %}
@@ -19,7 +19,7 @@
         </div>
         <hr class="border-4 my-6 border-gray-100">
         {% if page_obj %}
-            <div class="table-container">
+            <div class="table-container overflow-x-auto">
                 <table class="table-auto w-full text-left">
                     <thead>
                     <tr class="border-b">
@@ -60,7 +60,7 @@
         {% endif %}
     </div>
     {% if filter %}
-        <div class="p-6 bg-white shadow rounded">
+        <div class="p-6 bg-white shadow rounded col-span-2">
             {% include "backoffice/partials/filters.html" %}
         <div>
     {% endif %}
