@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional
 
 from django import template
@@ -111,6 +112,12 @@ def getattr_filter(obj, name):
         if isinstance(value, FieldFile) and "csv" in value.name:
             value = mark_safe(
                 f'<a href="{value.url}" type="text/csv" download>{value.name}</a>'
+            )
+        if isinstance(value, Decimal):
+            value = (
+                value.quantize(Decimal(1))
+                if value == value.to_integral()
+                else value.normalize()
             )
         return value
 
