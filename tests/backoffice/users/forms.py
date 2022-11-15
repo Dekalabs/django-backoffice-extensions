@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "input"}),
             "last_name": forms.TextInput(attrs={"class": "input"}),
-            "username": forms.EmailInput(attrs={"class": "input"}),
+            "username": forms.TextInput(attrs={"class": "input"}),
         }
 
 

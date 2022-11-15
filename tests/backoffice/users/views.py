@@ -62,4 +62,3 @@ class ExportUsersView(LoginRequiredMixin, ExportMixin, View):
     filename = "users.csv"
     queryset = UserListView.queryset
     fields = UserDetailView.fields
-    filterset_class = UserListView.filterset_class

@@ -1,12 +1,12 @@
-{% for section, entries in sidebar %}
-    <p class="menu-label">{{ section }}</p>
-    <ul class="menu-list">
-        {% for url, label, active in entries %}
-            <li>
-                <a href="{{ url }}" class="{% if active %}is-active{% endif %}">
+<div class="h-full">
+    {% for section, entries in sidebar %}
+        <p class="p-4 text-white font-bold bg-white/5">{{ section }}</p>
+        <div class="text-gray-300 flex flex-col font-normal">
+            {% for url, label, active in entries %}
+                <a href="{{ url }}" class="py-2 {% if active %}text-white border-l-4 pl-7{% else %}pl-8{% endif %}">
                     {{ label }}
                 </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endfor %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

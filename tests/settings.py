@@ -70,9 +70,9 @@ WSGI_APPLICATION = "tests.wsgi.application"
 BACKOFFICE = {
     "default": {
         "STATUS_TAG_CLASSES": {
-            IDLE: "is-warning",
-            ACTIVE: "is-success",
-            ERROR: "is-danger",
+            IDLE: "warning",
+            ACTIVE: "success",
+            ERROR: "danger",
         },
         "SIDEBAR_CONFIG": [
             {

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional
 
 from django import template
@@ -11,8 +12,6 @@ from django.utils.safestring import mark_safe
 
 from backoffice_extensions.helpers import StatisticsValue
 from backoffice_extensions.settings import (
-    BOOLEAN_FALSE_ICON_CLASSES,
-    BOOLEAN_TRUE_ICON_CLASSES,
     DETAILS_URLS,
     NO_IMAGE_VALUE,
     NONE_VALUE,
@@ -65,18 +64,22 @@ def sidebar_menu(context):
 @register.filter
 def boolean_icon(value):
     """Gets an icon for given boolean value."""
-    result = f'<i class="{BOOLEAN_FALSE_ICON_CLASSES}"></i>'
-    if value:
-        result = f'<i class="{BOOLEAN_TRUE_ICON_CLASSES}"></i>'
+    result = f"""
+    <span class="{'text-green-600' if value else 'text-red-500' }">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="{'M5 13l4 4L19 7' if value else 'M6 18L18 6M6 6l12 12' }" />
+        </svg>
+    </span>
+    """
     return mark_safe(result)
 
 
 @register.filter
 def status_tag(value):
-    """Gets an icon for given boolean value."""
+    """Gets a status tag with the corresponding class."""
     result = (
-        f'<span class="tag {STATUS_TAG_CLASSES.get(value.status, "")}">'
-        f"{value.get_status_display()}</i>"
+        f'<span class="text-sm text-center rounded px-2 py-1 {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
+        f"{value.get_status_display()}</span>"
     )
     return mark_safe(result)
 
@@ -93,14 +96,14 @@ def getattr_filter(obj, name):
             value = boolean_icon(value)
         if isinstance(value, ImageFieldFile):
             if value:
-                value = mark_safe(f'<img src="{value.url}" />')
+                value = mark_safe(f'<img src="{value.url}" class="max-w-xl" />')
             else:
                 value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
             if value.exists():
-                tags = '<div class="tags">'
+                tags = '<div class="flex gap-2 text-sm">'
                 for item in value.all():
-                    tags += f'<span class="tag">{str(item)}</span>'
+                    tags += f'<span class="rounded bg-gray-200 px-2 py-1">{str(item)}</span>'
                 value = mark_safe(tags + "</div>")
             else:
                 value = NONE_VALUE
@@ -109,6 +112,12 @@ def getattr_filter(obj, name):
         if isinstance(value, FieldFile) and "csv" in value.name:
             value = mark_safe(
                 f'<a href="{value.url}" type="text/csv" download>{value.name}</a>'
+            )
+        if isinstance(value, Decimal):
+            value = (
+                value.quantize(Decimal(1))
+                if value == value.to_integral()
+                else value.normalize()
             )
         return value
 

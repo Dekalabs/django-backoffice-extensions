@@ -1,78 +1,70 @@
-{% extends "backoffice/sidebar.html" %}
+{% extends "backoffice/layouts/default.html" %}
 {% load backoffice %}
 {% load humanize %}
 {% load i18n %}
 {% load static %}
 
 {% block content %}
-    <div class="columns">
-        <div class="column">
-            <div class="has-box">
-                <div class="mb-2 is-flex is-align-items-center has-flex-items">
-                    <div class="is-block">
-                        {% block title %}{% endblock %}
-                    </div>
-                    <div style="margin-left: auto; margin-right: 1rem;">
-                        {% include "backoffice/partials/search.html" %}
-                    </div>
-                    {% block actions %}
-                    {% endblock actions %}
-                    {# Deprecated, keep export block for compatibility #}
-                    {% block export %}
-                    {% endblock export %}
-                </div>
-                <hr>
-                <div class="columns reverse-columns">
-                    <div class="column">
-                        {% if page_obj %}
-                            <div class="display-grid">
-                                <div class="table-container">
-                                    <table class="table is-hoverable">
-                                        <thead>
-                                        <tr>
-                                            {% for field in list_display %}
-                                                <th class="is-capitalized">{{ page_obj.object_list|verbose_name:field }}</th>
-                                            {% endfor %}
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for obj in page_obj %}
-                                            <tr>
-                                                {% for field in list_display %}
-                                                    {% if forloop.first %}
-                                                        <th>
-                                                            {{ obj|getattr:field }}
-                                                        </th>
-                                                    {% else %}
-                                                        <td>
-                                                            {{ obj|getattr:field }}
-                                                        </td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                {% include "backoffice/partials/pagination.html" %}
-                            </div>
-                        {% else %}
-                            <div class="is-flex is-full-height is-justify-content-center is-align-items-center has-flex-items">
-                                <div class="subtitle is-6 py-4">{% trans "No results found." %}</div>
-                            </div>
-                        {% endif %}
-                    </div>
-                    {% if filter %}
-                        <div class="column is-3 is-strong-border-left pl-5 ml-5">
-                            {% include "backoffice/partials/filters.html" %}
-                        </div>
-                    {% endif %}
-                </div>
+<div class="grid grid-cols-12 gap-8">
+    <div class="p-6 bg-white w-full shadow rounded col-span-{% if filter %}10{% else %}12{% endif %}">
+        <div class="mb-2 flex items-center justify-between">
+            <div>
+                {% block title %}{% endblock title %}
+            </div>
+            <div class="flex gap-4">
+                {% include "backoffice/partials/search.html" %}
+                {% block actions %}
+                {% endblock actions %}
             </div>
         </div>
+        <hr class="border-4 my-6 border-gray-100">
+        {% if page_obj %}
+            <div class="table-container overflow-x-auto">
+                <table class="table-auto w-full text-left">
+                    <thead>
+                    <tr class="border-b">
+                        {% for field in list_display %}
+                            <th class="px-6 py-3">{{ page_obj.object_list|verbose_name:field }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in page_obj %}
+                        <tr {% if not forloop.last %}class="border-b"{% endif %}>
+                            {% for field in list_display %}
+                                {% if forloop.first %}
+                                    <th class="px-6 py-3">
+                                        {{ obj|getattr:field }}
+                                    </th>
+                                {% else %}
+                                    <td class="px-6 py-3">
+                                        {{ obj|getattr:field }}
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if page_obj.has_next or page_obj.has_previous %}
+                {% include "backoffice/partials/pagination.html" %}
+            {% endif %}
+        {% else %}
+            <div class="flex items-center gap-2 text-gray-600 font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                <span>{% trans "No results found." %}</span>
+            </div>
+        {% endif %}
     </div>
+    {% if filter %}
+        <div class="p-6 bg-white shadow rounded col-span-2">
+            {% include "backoffice/partials/filters.html" %}
+        <div>
+    {% endif %}
+</div>
 {% endblock content %}
 
 {% block footer %}
