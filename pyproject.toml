@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-backoffice-extensions"
-version = "3.1.1"
+version = "4.0.0"
 description = "A set of views, tools and helpers to create a backoffice using Django."
 readme = "README.rst"
 authors = ["Marcos Gabarda <marcos@dekalabs.com>"]
