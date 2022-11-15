@@ -5,7 +5,7 @@
 
 {% block title %}
     <div class="font-bold text-2xl">{% trans "Users" %}</div>
-    <div class="subtitle is-6">{% trans "Total" %}: {{ paginator.count|intcomma }}</div>
+    <div>{% trans "Total" %}: {{ paginator.count|intcomma }}</div>
 {% endblock %}
 
 {% block actions %}
