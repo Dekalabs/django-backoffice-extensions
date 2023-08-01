@@ -1,15 +1,19 @@
 {% load i18n %}
-<nav class="flex gap-4 py-4" role="navigation" aria-label="pagination">
-  <a class="bg-gray-100 px-4 py-2 text-sm {% if not page_obj.has_previous %}opacity-25 cursor-not-allowed{% else %}cursor-pointer{% endif %}"
+
+<hr class="md:min-w-full" />
+<nav class="flex gap-6 py-4 px-6" role="navigation" aria-label="pagination">
+  <a class="flex items-center gap-1 text-slote-500 text-sm {% if not page_obj.has_previous %}opacity-25 cursor-not-allowed{% else %}cursor-pointer{% endif %}"
     {% if page_obj.has_previous %}href="?page={{ page_obj.previous_page_number }}{% if parameters %}&{{ parameters }}{% endif %}"{% endif %}
   >
     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
     </svg>
+    <span>{% trans "Previous" %}</span>
   </a>
-  <a class="bg-gray-100 px-4 py-2 text-sm {% if not page_obj.has_next %}opacity-50 cursor-not-allowed{% else %}cursor-pointer{% endif %}"
+  <a class="flex items-center gap-1 text-slote-500 text-sm {% if not page_obj.has_next %}opacity-50 cursor-not-allowed{% else %}cursor-pointer{% endif %}"
     {% if page_obj.has_next %}href="?page={{ page_obj.next_page_number }}{% if parameters %}&{{ parameters }}{% endif %}"{% endif %}
   >
+  <span>{% trans "Next" %}</span>
     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
     </svg>

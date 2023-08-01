@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-26 16:30-0500\n"
+"POT-Creation-Date: 2023-08-01 02:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,162 +22,180 @@ msgstr ""
 msgid "Backoffice"
 msgstr "Backoffice"
 
-#: backoffice_extensions/templates/backoffice/bases/form.html:42
+#: backoffice_extensions/templates/backoffice/bases/detail.html:9
+#: backoffice_extensions/templates/backoffice/bases/form.html:9
+msgid "Back"
+msgstr "Volver"
+
+#: backoffice_extensions/templates/backoffice/bases/form.html:24
 msgid "Save"
 msgstr "Guardar"
 
-#: backoffice_extensions/templates/backoffice/bases/list.html:60
-msgid "No results found."
-msgstr "No se han encontrado resultados."
+#: backoffice_extensions/templates/backoffice/bases/form.html:123
+msgid "Add"
+msgstr "Añadir"
 
-#: backoffice_extensions/templates/backoffice/index.html:8
+#: backoffice_extensions/templates/backoffice/bases/list.html:31
+msgid "Filters"
+msgstr "Filtros"
+
+#: backoffice_extensions/templates/backoffice/bases/list.html:79
+msgid "No results found"
+msgstr "No se han encontrado resultados"
+
+#: backoffice_extensions/templates/backoffice/index.html:9
 #, python-format
-msgid "Welcome to %(backoffice_title)s's backoffice panel"
-msgstr "Bienvenido al panel de backoffice de  %(backoffice_title)s"
+msgid "Welcome to %(backoffice_title)s backoffice panel"
+msgstr "Bienvenido al panel de backoffice de %(backoffice_title)s"
 
-#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:6
-msgid "Confirmation"
-msgstr "Confirmación"
-
-#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:8
-msgid "Are you sure you want to delete?"
-msgstr "¿Estás seguro de querer eliminarlo?"
-
-#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:12
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:15
-#: tests/backoffice/templates/backoffice/users/detail.html:18
-msgid "Delete"
-msgstr "Eliminar"
-
-#: backoffice_extensions/templates/backoffice/partials/filters.html:16
-msgid "Filter"
-msgstr "Filtro"
-
-#: backoffice_extensions/templates/backoffice/partials/pagination.html:5
-msgid "Previous"
-msgstr "Previo"
-
-#: backoffice_extensions/templates/backoffice/partials/pagination.html:8
-msgid "Next"
-msgstr "Siguiente"
-
-#: backoffice_extensions/templates/backoffice/partials/search.html:4
-msgid "Search"
-msgstr "Buscar"
-
-#: backoffice_extensions/templates/backoffice/layouts/default.html:20
-msgid "Sign out"
-msgstr "Salir"
-
-#: backoffice_extensions/templates/backoffice/layouts/default.html:45
+#: backoffice_extensions/templates/backoffice/index.html:12
 #, python-format
 msgid ""
 "\n"
-"                    <strong>%(backoffice_title)s</strong>'s backoffice "
-"panel.\n"
-"                "
+"            On this site you can manage %(backoffice_title)s content as long "
+"as you have permissions. For further questions, contact an administrator.\n"
+"            "
 msgstr ""
 "\n"
-"      Panel de backoffice de <strong>%(backoffice_title)s</strong>.\n"
-"      "
+"            En este sitio puede administrar el contenido de %(backoffice_title)s "
+"siempre que que tenga permisos. Si tiene más preguntas, comuníquese con un administrador.\n"
+"            "
 
-#: backoffice_extensions/views.py:42
+#: backoffice_extensions/templates/backoffice/layouts/default.html:76
+msgid "Sign out"
+msgstr "Cerrar sesión"
+
+#: backoffice_extensions/templates/backoffice/layouts/default.html:115
+#, python-format
+msgid "%(backoffice_title)s backoffice panel."
+msgstr "Panel de backoffice de %(backoffice_title)s"
+
+#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:16
+msgid "Confirmation"
+msgstr "Confirmación"
+
+#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:18
+msgid "Are you sure you want to delete?"
+msgstr "¿Estás seguro de querer eliminarlo?"
+
+#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:25
+#: tests/backoffice/templates/backoffice/stuff/detail.html:13
+#: tests/backoffice/templates/backoffice/users/detail.html:20
+msgid "Delete"
+msgstr "Eliminar"
+
+#: backoffice_extensions/templates/backoffice/partials/delete_confirmation.html:27
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: backoffice_extensions/templates/backoffice/partials/filters.html:23
+msgid "Apply filters"
+msgstr "Aplicar filtros"
+
+#: backoffice_extensions/templates/backoffice/partials/filters.html:31
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: backoffice_extensions/templates/backoffice/partials/pagination.html:11
+msgid "Previous"
+msgstr "Previo"
+
+#: backoffice_extensions/templates/backoffice/partials/pagination.html:16
+msgid "Next"
+msgstr "Siguiente"
+
+#: backoffice_extensions/templates/backoffice/partials/search.html:19
+msgid "Search"
+msgstr "Buscar"
+
+#: backoffice_extensions/views.py:41
 #, python-brace-format
 msgid "{instance} created"
 msgstr "{instance} creada"
 
-#: backoffice_extensions/views.py:69
+#: backoffice_extensions/views.py:98
 #, python-brace-format
 msgid "{instance} updated"
 msgstr "{instance} actualizada"
 
-#: backoffice_extensions/views.py:162
+#: backoffice_extensions/views.py:226
 #, python-brace-format
 msgid "{instance} deleted"
 msgstr "{instance} eliminada"
 
-#: backoffice_extensions/views.py:163
+#: backoffice_extensions/views.py:227
 #, python-brace-format
 msgid "{instance} can't be deleted"
 msgstr "{instance} no se puede eliminar"
 
 #: tests/backoffice/auth/forms.py:13 tests/backoffice/auth/forms.py:17
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: tests/backoffice/auth/forms.py:23
 msgid "The username is mandatory"
-msgstr ""
+msgstr "El nombre de usuario es obligatorio"
 
 #: tests/backoffice/auth/forms.py:26 tests/backoffice/auth/forms.py:28
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: tests/backoffice/auth/forms.py:30
 msgid "The password is mandatory"
-msgstr ""
+msgstr "La contraseña es obligatoria"
 
 #: tests/backoffice/auth/forms.py:36 tests/backoffice/auth/forms.py:45
 msgid "These credentials are not correct"
-msgstr ""
+msgstr "Las credenciales no son correctas"
 
-#: tests/backoffice/templates/backoffice/auth/sign_in.html:6
-msgid "Sign In"
-msgstr ""
+#: tests/backoffice/templates/backoffice/auth/sign_in.html:8
+msgid "Welcome Back"
+msgstr "Bienvenido de nuevo"
 
-#: tests/backoffice/templates/backoffice/auth/sign_in.html:29
+#: tests/backoffice/templates/backoffice/auth/sign_in.html:11
+msgid "Enter your credentials to access your account"
+msgstr "Ingrese sus credenciales para acceder a su cuenta"
+
+#: tests/backoffice/templates/backoffice/auth/sign_in.html:39
 msgid "Sign in"
+msgstr "Iniciar sesión"
+
+#: tests/backoffice/templates/backoffice/stuff/list.html:6 tests/settings.py:86
+msgid "Stuff"
 msgstr ""
 
-#: tests/backoffice/templates/backoffice/stuff/detail.html:6
-msgid "Data for stuff"
-msgstr ""
-
-#: tests/backoffice/templates/backoffice/stuff/list.html:6
-#: tests/backoffice/templates/backoffice/users/list.html:6
-msgid "Total"
-msgstr "Total"
-
-#: tests/backoffice/templates/backoffice/stuff/list.html:6
-msgid "stuff"
-msgstr ""
-
-#: tests/backoffice/templates/backoffice/users/create.html:3
-#: tests/backoffice/templates/backoffice/users/list.html:13
+#: tests/backoffice/templates/backoffice/users/create.html:5
 msgid "Create user"
-msgstr ""
-
-#: tests/backoffice/templates/backoffice/users/detail.html:6
-msgid "Data for user"
-msgstr ""
+msgstr "Crear usuario"
 
 #: tests/backoffice/templates/backoffice/users/detail.html:13
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
-#: tests/backoffice/templates/backoffice/users/edit.html:3
+#: tests/backoffice/templates/backoffice/users/edit.html:5
 msgid "Edit user"
-msgstr ""
+msgstr "Editar usuario"
 
 #: tests/backoffice/templates/backoffice/users/list.html:6
-msgid "users"
-msgstr ""
+msgid "Users"
+msgstr "Usuarios"
 
-#: tests/backoffice/templates/backoffice/users/list.html:17
-msgid "Export to CSV"
+#: tests/backoffice/templates/backoffice/users/list.html:13
+msgid ""
+"Users can interact with the web application, authenticate themselves, and "
+"access certain features and data based on assigned permissions."
 msgstr ""
+"Los usuarios pueden interactuar con la aplicación web, autenticarse y acceder "
+"a ciertas funciones y datos según los permisos asignados."
 
-#: tests/settings.py:77
+#: tests/backoffice/templates/backoffice/users/list.html:52
+msgid "Export"
+msgstr "Exportar"
+
+#: tests/settings.py:79
 msgid "Data"
-msgstr ""
+msgstr "Datos"
 
-#: tests/settings.py:80
+#: tests/settings.py:82
 msgid "User"
-msgstr ""
-
-#: tests/settings.py:84
-msgid "Stuff"
-msgstr ""
+msgstr "Usuario"

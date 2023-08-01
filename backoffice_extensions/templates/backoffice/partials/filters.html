@@ -1,16 +1,36 @@
 {% load i18n %}
-<form method="get">
-  {% for field in filter.form %}
-    <div class="pb-2">
-      <label class="font-bold">{{ field.label }}</label>
-      <div class="mt-2">
-        {{ field }}
-        {% if field.help_text %}
-          <p class="text-xs pt-2 text-gray-600">{{ field.help_text }}</p>
-        {% endif %}
+
+<form id="filters" method="get" class="mb-0 hidden">
+  <hr class="md:min-w-full" />
+  <div class="px-6 py-6 grid grid-cols-4 gap-6">
+    {% for field in filter.form %}
+    <div>
+      <label class="font-bold text-sm text-slate-500 mb-2"
+        >{{ field.label }}</label
+      >
+      {{ field }} {% if field.help_text %}
+      <span class="text-xs pt-2 text-slate-500">{{ field.help_text }}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="flex gap-4 items-end text-sm">
+      <div>
+        <button
+          class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded inline items-center"
+          type="submit"
+        >
+          {% trans "Apply filters" %}
+        </button>
+      </div>
+      <div>
+        <input
+          type="reset"
+          class="bg-slate-100 hover:bg-slate-200 text-black py-2 px-4 rounded inline-flex items-center"
+          type="submit"
+          value="{% trans "Reset" %}"
+        />
       </div>
     </div>
-  {% endfor %}
-  <button class="button bg-primary text-accent mt-2 w-full" type="submit">{% trans "Filter" %}</button>
+  </div>
 </form>
-

@@ -7,6 +7,7 @@ USE_TZ = True
 
 SECRET_KEY = "dummy"
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 
 INSTALLED_APPS = [
@@ -19,8 +20,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "backoffice_extensions",
-    "tests.app.apps.TestAppConfig",
-    "tests.backoffice.apps.BackofficeAppConfig",
+    "tests.app",
+    "tests.backoffice",
 ]
 
 ROOT_URLCONF = "tests.urls"

@@ -1,76 +1,122 @@
 {% extends "backoffice/layouts/default.html" %}
-{% load backoffice %}
-{% load humanize %}
-{% load i18n %}
-{% load static %}
+{% load backoffice humanize i18n static %}
 
 {% block content %}
-<div class="grid grid-cols-12 gap-8">
-    <div class="p-6 bg-white w-full shadow rounded col-span-{% if filter %}10{% else %}12{% endif %}">
-        <div class="mb-2 flex items-center justify-between">
-            <div>
-                {% block title %}{% endblock title %}
-            </div>
-            <div class="flex gap-4">
-                {% include "backoffice/partials/search.html" %}
-                {% block actions %}
-                {% endblock actions %}
-            </div>
-        </div>
-        <hr class="border-4 my-6 border-gray-100">
-        {% if page_obj %}
-            <div class="table-container overflow-x-auto">
-                <table class="table-auto w-full text-left">
-                    <thead>
-                    <tr class="border-b">
-                        {% for field in list_display %}
-                            <th class="px-6 py-3">{{ page_obj.object_list|verbose_name:field }}</th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for obj in page_obj %}
-                        <tr {% if not forloop.last %}class="border-b"{% endif %}>
-                            {% for field in list_display %}
-                                {% if forloop.first %}
-                                    <th class="px-6 py-3">
-                                        {{ obj|getattr:field }}
-                                    </th>
-                                {% else %}
-                                    <td class="px-6 py-3">
-                                        {{ obj|getattr:field }}
-                                    </td>
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% if page_obj.has_next or page_obj.has_previous %}
-                {% include "backoffice/partials/pagination.html" %}
-            {% endif %}
-        {% else %}
-            <div class="flex items-center gap-2 text-gray-600 font-bold">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                <span>{% trans "No results found." %}</span>
-            </div>
-        {% endif %}
+<div class="bg-white w-full rounded mb-6 shadow-lg">
+  <div class="flex items-center justify-between p-6 gap-8">
+    <div>{% block title %}{% endblock title %}</div>
+    <div class="flex gap-4">
+      {% include "backoffice/partials/search.html" %}
+
+      {% if filter %}
+      <button
+        class="text-black text-sm py-2 px-4 rounded inline-flex items-center"
+        onclick="toggleFilters()"
+      >
+        <svg
+          id="iconArrow"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-4 h-4 mr-2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+          />
+        </svg>
+        <span>{% trans "Filters" %}</span>
+      </button>
+      {% endif %}
+
+      {% block actions %}{% endblock actions %}
     </div>
-    {% if filter %}
-        <div class="p-6 bg-white shadow rounded col-span-2">
-            {% include "backoffice/partials/filters.html" %}
-        <div>
+  </div>
+
+  {% if filter %}
+    {% include "backoffice/partials/filters.html" %}
+  {% endif %}
+
+  <div class="table-container overflow-x-auto">
+    <table class="table-auto w-full text-left text-sm">
+      <thead>
+        <tr
+          class="border-t border-b py-3 capitalize font-semibold bg-slate-50 text-slate-500 border-slate-100"
+        >
+          {% for field in list_display %}
+          <th class="py-3 px-6 align-middle whitespace-nowrap">{{ page_obj.object_list|verbose_name:field }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in page_obj %}
+        <tr>
+        {% for field in list_display %}
+          {% if forloop.first %}
+          <th class="py-4 text-slate-500 px-6 align-middle whitespace-nowrap">
+            {{ obj|getattr:field }}
+          </th>
+          {% else %}
+          <td class="py-4 text-slate-500 px-6 align-middle whitespace-nowrap">
+            {{ obj|getattr:field }}
+          </td>
+          {% endif %}
+        {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if page_obj.has_next or page_obj.has_previous %}
+        {% include "backoffice/partials/pagination.html" %}
     {% endif %}
+
+    {% if not page_obj %}
+    <div class="text-center text-sm text-slate-500 py-6">
+        {% trans "No results found" %}
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock content %}
 
-{% block footer %}
-    {{ block.super }}
-    {% if filter %}
-        <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-        {{ filter.form.media }}
-    {% endif %}
-{% endblock %}
+{% block script %}
+  {{ block.super }}
+
+  {% if filter %}
+  <script>
+    let openFilters = false;
+
+    function toggleFilters() {
+      let filters = document.getElementById("filters");
+      let iconArrow = document.getElementById("iconArrow");
+
+      if (!openFilters) {
+        filters.classList.remove("hidden");
+        iconArrow.classList.add("rotate-180");
+        openFilters = true;
+        return;
+      }
+
+      filters.classList.add("hidden");
+      iconArrow.classList.remove("rotate-180");
+      openFilters = false;
+    }
+
+    function hasFilterParams() {
+      let params = window.location.search;
+      return params.includes("?") && !params.includes("search");
+    }
+
+    if (hasFilterParams()) {
+      toggleFilters();
+    }
+  </script>
+
+  <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+  {{ filter.form.media }}
+  {% endif %}
+{% endblock script %}

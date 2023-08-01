@@ -3,9 +3,16 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="rounded shadow p-6 bg-white">
-        <div class="font-bold text-2xl">
-            {% blocktrans %}Welcome to {{ backoffice_title }}'s backoffice panel{% endblocktrans %}
+<div class="bg-white w-full rounded mb-12 shadow-lg max-w-2xl mx-auto">
+    <div class="p-8"> 
+        <div class="font-semibold text-2xl text-slate-700 pb-2">
+            {% blocktrans %}Welcome to {{ backoffice_title }} backoffice panel{% endblocktrans %}
+        </div>
+        <div>
+            {% blocktrans %}
+            On this site you can manage {{ backoffice_title }} content as long as you have permissions. For further questions, contact an administrator.
+            {% endblocktrans %}
         </div>
     </div>
+</div>
 {% endblock content %}
