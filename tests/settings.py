@@ -8,7 +8,7 @@ USE_TZ = True
 SECRET_KEY = "dummy"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite3"}}
 
 INSTALLED_APPS = [
     "django.forms",
