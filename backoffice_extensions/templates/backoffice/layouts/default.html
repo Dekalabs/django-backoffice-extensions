@@ -8,28 +8,24 @@
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
+      <a
+        href="{{ index_url }}"
+        class="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+      >
+        {% if backoffice_logo %}
+          <img src="{% static 'images/logo.svg' %}" alt="{{ backoffice_title }}" class="w-full max-h-10" />
+        {% else %}
+          {{ backoffice_title }}
+        {% endif %}
+      </a>
       <button
         class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
         type="button"
         onclick="toggleNavbar()"
       >
-        <i class="fas fa-bars">X</i></button
-      ><a
-        href="{{ index_url }}"
-        class="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-        >
-          {% if backoffice_logo %}
-            <img src="{% static 'images/logo.svg' %}" alt="{{ backoffice_title }}" class="w-full max-h-10" />
-          {% else %}
-            {{ backoffice_title }}
-          {% endif %}
-        </a
-      >
-      <button
-        class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-        type="button"
-      >
-        ?
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
       </button>
       <div
         id="navbarMenu"
@@ -42,7 +38,11 @@
                 href="{{ index_url }}"
                 class="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
               >
-                <img src="{% static 'images/logo.svg' %}" alt="{{ backoffice_title }}" class="w-full max-h-10" />
+                {% if backoffice_logo %}
+                  <img src="{% static 'images/logo.svg' %}" alt="{{ backoffice_title }}" class="w-full max-h-10" />
+                {% else %}
+                  {{ backoffice_title }}
+                {% endif %}
               </a>
             </div>
             <div class="w-6/12 flex justify-end">
@@ -51,7 +51,9 @@
                 onclick="toggleNavbar()"
                 class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
               >
-                <i class="fas fa-times">X</i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
           </div>
