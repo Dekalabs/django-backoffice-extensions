@@ -99,7 +99,11 @@
 {% block script %}
     {{ block.super }}
 
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
+    {{ form.media }}
+
     {% if form_sets %}
+    <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script type="text/javascript">
         window.onload = function () {
             {% for label, form_set in form_sets.items %}
@@ -134,8 +138,4 @@
         }
     </script>
     {% endif %}
-
-    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-    <script src="{% static 'js/jquery.formset.js' %}"></script>
-    {{ form.media }}
 {% endblock %}

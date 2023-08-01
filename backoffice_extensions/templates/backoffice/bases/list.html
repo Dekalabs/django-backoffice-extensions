@@ -86,6 +86,9 @@
 {% block script %}
   {{ block.super }}
 
+  <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
+  {{ filter.form.media }}
+
   {% if filter %}
   <script>
     let openFilters = false;
@@ -115,8 +118,5 @@
       toggleFilters();
     }
   </script>
-
-  <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-  {{ filter.form.media }}
   {% endif %}
 {% endblock script %}
