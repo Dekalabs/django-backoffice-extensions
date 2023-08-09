@@ -1,12 +1,21 @@
-<div class="h-full">
-    {% for section, entries in sidebar %}
-        <p class="p-4 text-white font-bold bg-white/5">{{ section }}</p>
-        <div class="text-gray-300 flex flex-col font-normal">
-            {% for url, label, active in entries %}
-                <a href="{{ url }}" class="py-2 {% if active %}text-white border-l-4 pl-7{% else %}pl-8{% endif %}">
-                    {{ label }}
-                </a>
-            {% endfor %}
-        </div>
+{% for section, entries in sidebar %}
+<div class="mb-4">
+  <h6
+    class="md:min-w-full text-slate-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+  >
+    {{ section }}
+  </h6>
+  <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+    {% for url, label, active in entries %}
+    <li class="items-center">
+      <a
+        href="{{ url }}"
+        class="text-xs uppercase py-3 transition-colors font-bold block pl-4 {% if active %}text-link-active hover:text-link-active-hover{% else %}text-slote-700 hover:text-slote-500{% endif %}"
+      >
+        {{ label }}
+      </a>
+    </li>
     {% endfor %}
+  </ul>
 </div>
+{% endfor %}

@@ -1,11 +1,24 @@
 {% load i18n %}
-<form method="get">
-  <div class="relative">
-    <input type="text" placeholder="{% trans "Search" %}..." name="search" value="{{ search }}">
-    <div class="absolute right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center text-gray-400">
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    </div>
-  </div>
-</form>
+
+<form method="get" class="flex gap-2 items-center mb-0">
+    <svg
+      class="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      ></path>
+    </svg>
+    <input
+      type="text"
+      placeholder="{% trans "Search" %}..."
+      name="search"
+      value="{{ search }}"
+      class="focus:outline-none text-sm"
+    />
+  </form>

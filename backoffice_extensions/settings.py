@@ -29,5 +29,3 @@ DETAILS_URLS = get_backoffice_settings_attribute(
     ],
 )
 SIDEBAR_CONFIG = get_backoffice_settings_attribute("SIDEBAR_CONFIG", [])
-PRIMARY_COLOR = get_backoffice_settings_attribute("PRIMARY_COLOR", "#011b67")
-ACCENT_COLOR = get_backoffice_settings_attribute("ACCENT_COLOR", "#fff")

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-backoffice-extensions"
-version = "4.0.0"
+version = "4.1.0"
 description = "A set of views, tools and helpers to create a backoffice using Django."
 readme = "README.rst"
 authors = ["Marcos Gabarda <marcos@dekalabs.com>"]
@@ -17,20 +17,20 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-django = "^4.0.0"
+django = "^4.2.3"
 django-model-utils = "^4.0.0"
 pytest-cov = "^2.10.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pylint = "^2.5.3"
 pytest = "^5.4.3"
 factory_boy = "^2.12.0"
 django-test-plus = "^1.4.0"
 pytest-django = "^3.9.0"
 pytest-cov = "^2.10.0"
-black = "^22.8.0"
+black = "^22.10.0"
 isort = "^5.10.1"
-mypy = "^0.971"
+mypy = "^0.982"
 pre-commit = "^2.20.0"
 
 [tool.isort]

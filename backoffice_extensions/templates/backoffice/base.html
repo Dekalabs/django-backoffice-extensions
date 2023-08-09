@@ -1,76 +1,75 @@
-{% load i18n %}
+{% load i18n static %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <title>
+      {% block title_page %}{{ backoffice_title }}{% endblock title_page %}
+    </title>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>{% block header_title %}{{ backoffice_title }}{% endblock header_title %}</title>
-    {% block extra_header %}
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <style>
-            input, textarea, select {
-                background-color: #edf2f7;
-                padding: 0.5rem 0.75rem !important;
-                border-radius: 0.25rem;
-                width: 100%;
-            }
+    <script src="{% static 'js/tailwind.js' %}"></script>
 
-            .button[type=button], 
-            .button[type=reset], 
-            .button[type=submit], 
-            .button {
-                border-radius: 0.25rem;
-                cursor: pointer;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: .5em 1em;
-                white-space: nowrap;
-                gap: 0.5rem;
-            }
+    {% block tailwind_config %}
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "link-active": "#0094f3",
+              "link-active-hover": "#005bea",
+              primary: {
+                400: "#0094f3",
+                500: "#005bea",
+                600: "#004abc"
+              },
+              success: "#4bb543",
+              error: "#ff3333",
 
-            .success {
-                background-color: #00c851;
-            }
+            },
+            backgroundImage: {
+              'header': "linear-gradient(240deg, #00c6fb 0%, #005bea 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    {% endblock tailwind_config %}
 
-            .warning {
-                background-color: #ffbb33;
-            }
+    {% block tailwind_components %}
+    <style type="text/tailwindcss">
+      @layer components {
+        .input {
+          @apply border border-slate-200 rounded-lg text-sm p-2 w-full focus:outline-primary-400;
+        }
 
-            .danger {
-                background-color: #ff4444;
-            }
+        .primary-button {
+          @apply bg-primary-500 text-white text-sm font-medium py-2 px-4 rounded-2xl hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-400;
+        }
 
-            .bg-primary {
-                background-color: {{ backoffice_primary_color }} !important;
-            }
+        .secondary-button {
+          @apply bg-slate-100 text-slate-700 text-sm font-medium py-2 px-4 rounded-2xl hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200;
+        }
 
-            .text-primary {
-                color: {{ backoffice_primary_color }} !important;
-            }
+        .warning-button {
+          @apply bg-red-500 text-white text-sm font-medium py-2 px-4 rounded-2xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500;
+        }
 
-            .border-primary {
-                border-color: {{ backoffice_primary_color }} !important;
-            }
+        .action-button {
+          @apply bg-white bg-opacity-70 uppercase text-slate-700 text-xs font-bold py-2 px-4 rounded-2xl shadow-lg transition-shadow hover:shadow;
+        }
+      }
+    </style>
+    {% endblock tailwind_components %}
 
-            .bg-accent {
-                background-color: {{ backoffice_accent_color }} !important;
-            }
+    {% block extra_header %}{% endblock extra_header %}
+  </head>
 
-            .text-accent {
-                color: {{ backoffice_accent_color }} !important;
-            }
-        </style>
-    {% endblock extra_header %}
-</head>
-
-<body>
-{% block body %}{% endblock body %}
-</body>
-
+  <body class="text-slate-700 antialiased">
+    {% block body %}{% endblock body %}
+    {% block script %}{% endblock script %}
+  </body>
 </html>

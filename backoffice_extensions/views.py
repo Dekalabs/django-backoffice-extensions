@@ -39,6 +39,19 @@ class BackOfficeCreateView(BackOfficeFormView):
     """Base view for creations."""
 
     success_message: str = _("{instance} created")
+    form_set_classes: dict = {}
+
+    def get_extra_context(self):
+        context = super().get_extra_context()
+        context.update({"form_sets": self.form_set_classes})
+        return context
+
+    def get_redirect_response(self, instance):
+        model_class = self.get_model_class()
+        return redirect(
+            f"{URL_NAMESPACE}:{model_class._meta.model_name}-detail",
+            pk=instance.pk,
+        )
 
     def get(self, request, **kwargs):
         form = self.form_class()
@@ -46,19 +59,35 @@ class BackOfficeCreateView(BackOfficeFormView):
         context.update(self.get_extra_context())
         return render(request, self.template_name, context=context)
 
+    def after_create(self, instance):
+        pass
+
     def post(self, request, **kwargs):
-        model_class = self.get_model_class()
         form = self.form_class(request.POST, request.FILES)
-        context = {"form": form}
-        context.update(self.get_extra_context())
+        form_sets = [
+            form_set(data=request.POST, files=request.FILES)
+            for form_set in self.form_set_classes.values()
+        ]
         if form.is_valid():
             instance = form.save()
-            messages.success(
-                request, self.success_message.format(instance=str(instance))
-            )
-            return redirect(
-                f"{URL_NAMESPACE}:{model_class._meta.model_name}-detail", pk=instance.pk
-            )
+            for form_set in form_sets:
+                form_set.instance = instance
+            if all([form_set.is_valid() for form_set in form_sets]):
+                for form_set in form_sets:
+                    form_set.save()
+                self.after_create(instance)
+                messages.success(
+                    request, self.success_message.format(instance=str(instance))
+                )
+                return self.get_redirect_response(instance=instance)
+        form_sets_dict = {
+            key: form_sets[i] for i, key in enumerate(self.form_set_classes.keys())
+        }
+        context = {
+            "form": form,
+            "form_sets": form_sets_dict,
+            **self.get_extra_context(),
+        }
         return render(request, self.template_name, context=context)
 
 
@@ -67,6 +96,12 @@ class BackOfficeEditView(BackOfficeFormView):
 
     queryset: Optional[models.QuerySet] = None
     success_message = _("{instance} updated")
+    form_set_classes: dict = {}
+
+    def get_extra_context(self):
+        context = super().get_extra_context()
+        context.update({"form_sets": self.form_set_classes})
+        return context
 
     def get_queryset(self) -> Optional[models.QuerySet]:
         """Gets the queryset in order to be able to access to annotated fields."""
@@ -86,22 +121,42 @@ class BackOfficeEditView(BackOfficeFormView):
         else:
             instance = get_object_or_404(model_class, pk=pk)
         form = self.form_class(instance=instance)
-        context = {"form": form, "instance": instance}
-        context.update(self.get_extra_context())
+        context = {
+            "form": form,
+            "instance": instance,
+            "form_sets": {
+                label: form_set(instance=instance)
+                for label, form_set in self.form_set_classes.items()
+            },
+            **self.get_extra_context(),
+        }
         return render(request, self.template_name, context=context)
+
+    def after_edit(self, instance):
+        pass
 
     def post(self, request, pk, **kwargs):
         model_class = self.get_model_class()
         instance = get_object_or_404(model_class, pk=pk)
         form = self.form_class(request.POST, request.FILES, instance=instance)
-        context = {"form": form, "instance": instance}
-        context.update(self.get_extra_context())
-        if form.is_valid():
+        context = {"form": form, "instance": instance, **self.get_extra_context()}
+        form_sets = [
+            form_set(data=request.POST, files=request.FILES, instance=form.instance)
+            for form_set in self.form_set_classes.values()
+        ]
+        if form.is_valid() and all([form_set.is_valid() for form_set in form_sets]):
             instance = form.save()
+            for form_set in form_sets:
+                form_set.save()
+            self.after_edit(instance)
             messages.success(
                 request, self.success_message.format(instance=str(instance))
             )
             return self.get_redirect_response(instance=instance)
+        form_sets_dict = {
+            key: form_sets[i] for i, key in enumerate(self.form_set_classes.keys())
+        }
+        context.update({"form_sets": form_sets_dict})
         return render(request, self.template_name, context=context)
 
 
@@ -151,13 +206,9 @@ class BackOfficeDetailView(LoginRequiredMixin, BackOfficeViewMixin, View):
     def get_object(self, pk: int) -> models.Model:
         """Gets the object, using the queryset if provided to add annotation fields."""
         queryset = self.get_queryset()
-
         if queryset:
-            instance = get_object_or_404(queryset, pk=pk)
-        else:
-            instance = get_object_or_404(self.model_class, pk=pk)
-
-        return instance
+            return get_object_or_404(queryset, pk=pk)
+        return get_object_or_404(self.model_class, pk=pk)
 
     def get(self, request, pk):
         self.instance = self.get_object(pk=pk)
@@ -190,11 +241,8 @@ class BackOfficeDeleteView(LoginRequiredMixin, BackOfficeViewMixin, View):
         """Gets the object, using the queryset if provided to add annotation fields."""
         queryset = self.get_queryset()
         if queryset:
-            instance = get_object_or_404(queryset, pk=pk)
-        else:
-            instance = get_object_or_404(self.model_class, pk=pk)
-
-        return instance
+            return get_object_or_404(queryset, pk=pk)
+        return get_object_or_404(self.model_class, pk=pk)
 
     def get(self, request, pk, **kwargs):
         """Gets the instance and calls to perform delete."""

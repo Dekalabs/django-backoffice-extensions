@@ -78,7 +78,8 @@ def boolean_icon(value):
 def status_tag(value):
     """Gets a status tag with the corresponding class."""
     result = (
-        f'<span class="text-sm text-center rounded px-2 py-1 {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
+        '<span class="text-sm text-center rounded px-2 py-1'
+        f' {STATUS_TAG_CLASSES.get(value.status, "bg-gray-200")}">'
         f"{value.get_status_display()}</span>"
     )
     return mark_safe(result)
@@ -96,15 +97,15 @@ def getattr_filter(obj, name):
             value = boolean_icon(value)
         if isinstance(value, ImageFieldFile):
             if value:
-                value = mark_safe(f'<img src="{value.url}" class="max-w-xl" />')
+                value = mark_safe(f'<img class="max-w-xs rounded" src="{value.url}" />')
             else:
                 value = NO_IMAGE_VALUE
         if isinstance(value, Manager):
             if value.exists():
-                tags = '<div class="flex gap-2 text-sm">'
+                tags = "<ul class='list-disc'>"
                 for item in value.all():
-                    tags += f'<span class="rounded bg-gray-200 px-2 py-1">{str(item)}</span>'
-                value = mark_safe(tags + "</div>")
+                    tags += f"<li>{str(item)}</li>"
+                value = mark_safe(tags + "</ul>")
             else:
                 value = NONE_VALUE
         if Point and isinstance(value, Point):
@@ -145,7 +146,7 @@ def getattr_filter(obj, name):
                 result = result
     if name in STATUS_FIELDS:
         result = status_tag(obj)
-    if hasattr(result, "__call__") and not isinstance(result, Manager):
+    if callable(result) and not isinstance(result, Manager):
         result = result()
     return _parse_value(result)
 
@@ -162,7 +163,7 @@ def verbose_name(model_or_queryset, field):
         return model._meta.get_field(field).verbose_name
     except FieldDoesNotExist:
         if hasattr(model, field) and hasattr(getattr(model, field), "verbose_name"):
-            return getattr(getattr(model, field), "verbose_name")
+            return getattr(getattr(model, field), "verbose_name", field)
     return field
 
 

@@ -1,9 +1,13 @@
 {% extends "backoffice/bases/list.html" %}
-{% load backoffice %}
-{% load humanize %}
-{% load i18n %}
+{% load backoffice humanize i18n %}
 
 {% block title %}
-    <div class="font-bold text-2xl">{% trans "Stuff" %}</div>
-    <div>{% trans "Total" %}: {{ paginator.count|intcomma }}</div>
-{% endblock %}
+<div class="flex gap-2 mb-1">
+  <div class="font-semibold text-lg text-slate-700">{% trans "Stuff" %}</div>
+  <div
+    class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-0 bg-slate-200 text-slate-600 rounded-full"
+  >
+    {{ paginator.count|intcomma }}
+  </div>
+</div>
+{% endblock title %}
