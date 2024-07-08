@@ -41,11 +41,6 @@ class BackOfficeCreateView(BackOfficeFormView):
     success_message: str = _("{instance} created")
     form_set_classes: dict = {}
 
-    def get_extra_context(self):
-        context = super().get_extra_context()
-        context.update({"form_sets": self.form_set_classes})
-        return context
-
     def get_redirect_response(self, instance):
         model_class = self.get_model_class()
         return redirect(
@@ -54,9 +49,13 @@ class BackOfficeCreateView(BackOfficeFormView):
         )
 
     def get(self, request, **kwargs):
-        form = self.form_class()
-        context = {"form": form}
-        context.update(self.get_extra_context())
+        context = {
+            "form": self.form_class(),
+            "form_sets": {
+                label: form_set() for label, form_set in self.form_set_classes.items()
+            },
+            **self.get_extra_context(),
+        }
         return render(request, self.template_name, context=context)
 
     def after_create(self, instance):
@@ -97,11 +96,6 @@ class BackOfficeEditView(BackOfficeFormView):
     queryset: Optional[models.QuerySet] = None
     success_message = _("{instance} updated")
     form_set_classes: dict = {}
-
-    def get_extra_context(self):
-        context = super().get_extra_context()
-        context.update({"form_sets": self.form_set_classes})
-        return context
 
     def get_queryset(self) -> Optional[models.QuerySet]:
         """Gets the queryset in order to be able to access to annotated fields."""

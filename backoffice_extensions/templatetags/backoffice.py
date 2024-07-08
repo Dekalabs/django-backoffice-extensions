@@ -148,6 +148,8 @@ def getattr_filter(obj, name):
         result = status_tag(obj)
     if callable(result) and not isinstance(result, Manager):
         result = result()
+    if hasattr(obj, f"get_{name}_display"):
+        result = getattr(obj, f"get_{name}_display")()
     return _parse_value(result)
 
 
@@ -162,8 +164,14 @@ def verbose_name(model_or_queryset, field):
     try:
         return model._meta.get_field(field).verbose_name
     except FieldDoesNotExist:
-        if hasattr(model, field) and hasattr(getattr(model, field), "verbose_name"):
-            return getattr(getattr(model, field), "verbose_name", field)
+        pass
+    if hasattr(model, field) and hasattr(getattr(model, field), "verbose_name"):
+        return getattr(getattr(model, field), "verbose_name", field)
+    # Support properties short description.
+    try:
+        return getattr(model, field).fget.short_description
+    except AttributeError:
+        pass
     return field
 
 
